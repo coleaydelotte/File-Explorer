@@ -1,11 +1,13 @@
+use std::path::{Path, PathBuf};
+
 pub struct Functionality {
-    pwd : String,
+    pwd : PathBuf,
     forward_directories : Vec<String>,
     parent_directory : String,
 }
 
 impl Functionality {
-    pub fn new(pwd_param: String, forward_directories_param: Vec<String>) -> Functionality {
+    pub fn new(pwd_param: PathBuf, forward_directories_param: Vec<String>) -> Functionality {
         let mut func: Functionality = Functionality {
             pwd : pwd_param,
             forward_directories : forward_directories_param,
@@ -20,15 +22,17 @@ impl Functionality {
      * the file path of the parent directory.
      */
     pub fn step_up(&mut self) -> String {
-        let pwd_clone = self.pwd.clone();
-        let mut split_file_path: Vec<&str> = pwd_clone.split("\\").collect();
-        split_file_path.pop();
-        split_file_path.pop();
-        let mut parent_directory: String = String::new();
-        for i in split_file_path {
-            parent_directory.push_str(i);
-            parent_directory.push_str("\\");
+        let mut pwd_clone = self.pwd.clone();
+        pwd_clone.pop();
+        self.parent_directory = pwd_clone.to_string_lossy().into_owned();
+        return pwd_clone.to_string_lossy().into_owned();
+    }
+
+    pub fn find_pwd_name(&mut self) -> String {
+        let pwd_name = self.pwd.file_name().map(|name| name.to_string_lossy().into_owned());
+        match pwd_name {
+            Some(name) => name,
+            None => String::new(),
         }
-        parent_directory
     }
 }

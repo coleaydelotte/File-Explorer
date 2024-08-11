@@ -1,47 +1,49 @@
+use std::path::PathBuf;
 use walkdir::WalkDir;
 
 pub struct Directory {
-    pwd: String,
+    pwd: PathBuf,
     forward_directories: Vec<String>,
     parent_directory: String,
 }
 
 impl Directory {
-    pub fn new(pwd_param: String) -> Directory {
-        Directory {
+    pub fn new(pwd_param: PathBuf) -> Directory {
+        let mut directory = Directory {
             pwd: pwd_param,
             forward_directories: Vec::new(),
             parent_directory: String::new(),
-        }
+        };
+        directory.update_values();
+        directory
     }
 
     pub fn new_empty() -> Directory {
         Directory {
-            pwd: String::new(),
+            pwd: PathBuf::new(),
             forward_directories: Vec::new(),
             parent_directory: String::new(),
         }
     }
 
     pub fn find_forward_directories(&mut self) -> Vec<String> {
-        let mut forward_directories: Vec<String> = Vec::new();
+        let mut forward_directories = Vec::new();
         for entry in WalkDir::new(&self.pwd).into_iter().filter_map(|e| e.ok()) {
-            let not_split_file_path = entry.path().display().to_string();
-            let split_file_path = not_split_file_path.split("\\");
-            forward_directories.push(split_file_path.last().unwrap().to_string());
-            self.set_forward_directories(forward_directories.clone());
+            if let Some(file_name) = entry.path().file_name() {
+                forward_directories.push(file_name.to_string_lossy().into_owned());
+            }
         }
-        return forward_directories;
+        self.forward_directories = forward_directories.clone();
+        forward_directories
     }
 
     pub fn find_parent_directory(&mut self) -> String {
-        let pwd_clone = self.pwd.clone();
-        let split_file_path: Vec<&str> = pwd_clone.split("\\").collect();
-        if split_file_path.len() >= 2 {
-            self.set_parent_directory(split_file_path[split_file_path.len() - 3].to_string());
-            return split_file_path[split_file_path.len() - 3].to_string();
+        if let Some(parent) = self.pwd.parent().and_then(|p| p.file_name()) {
+            let parent_directory = parent.to_string_lossy().into_owned();
+            self.parent_directory = parent_directory.clone();
+            parent_directory
         } else {
-            return String::new();
+            String::new()
         }
     }
 
@@ -50,29 +52,20 @@ impl Directory {
         self.find_parent_directory();
     }
 
-    pub fn set_pwd(&mut self, pwd: String) {
+    pub fn set_pwd(&mut self, pwd: PathBuf) {
         self.pwd = pwd;
         self.update_values();
     }
 
-    pub fn get_pwd(&mut self) -> String {
+    pub fn get_pwd(&self) -> PathBuf {
         self.pwd.clone()
     }
 
-    fn set_forward_directories(&mut self, forward_directories: Vec<String>) {
-        self.forward_directories = forward_directories;
-    }
-
-    pub fn get_forward_directories(&mut self) -> Vec<String> {
+    pub fn get_forward_directories(&self) -> Vec<String> {
         self.forward_directories.clone()
     }
 
-    fn set_parent_directory(&mut self, parent_directory: String) {
-        self.parent_directory = parent_directory;
-    }
-
-    pub fn get_parent_directory(&mut self) -> String {
+    pub fn get_parent_directory(&self) -> String {
         self.parent_directory.clone()
     }
 }
-    
