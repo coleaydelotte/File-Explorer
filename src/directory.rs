@@ -1,6 +1,5 @@
 use walkdir::WalkDir;
 
-#[allow(dead_code)]
 pub struct Directory {
     pwd: String,
     forward_directories: Vec<String>,
@@ -35,28 +34,36 @@ impl Directory {
         return forward_directories;
     }
 
-    pub fn find_parent_directory(&self) -> String {
-        let split_file_path: Vec<&str> = self.pwd.split("\\").collect();
+    pub fn find_parent_directory(&mut self) -> String {
+        let pwd_clone = self.pwd.clone();
+        let split_file_path: Vec<&str> = pwd_clone.split("\\").collect();
         if split_file_path.len() >= 2 {
-            return split_file_path[split_file_path.len() - 2].to_string();
+            self.set_parent_directory(split_file_path[split_file_path.len() - 3].to_string());
+            return split_file_path[split_file_path.len() - 3].to_string();
         } else {
             return String::new();
         }
     }
 
-    pub fn set_pwd(&mut self, pwd: String) {
-        self.pwd = pwd;
+    fn update_values(&mut self) {
+        self.find_forward_directories();
+        self.find_parent_directory();
     }
 
-    pub fn get_pwd(&self) -> String {
+    pub fn set_pwd(&mut self, pwd: String) {
+        self.pwd = pwd;
+        self.update_values();
+    }
+
+    pub fn get_pwd(&mut self) -> String {
         self.pwd.clone()
     }
 
-    pub fn set_forward_directories(&mut self, forward_directories: Vec<String>) {
+    fn set_forward_directories(&mut self, forward_directories: Vec<String>) {
         self.forward_directories = forward_directories;
     }
 
-    pub fn get_forward_directories(&self) -> Vec<String> {
+    pub fn get_forward_directories(&mut self) -> Vec<String> {
         self.forward_directories.clone()
     }
 
@@ -64,7 +71,8 @@ impl Directory {
         self.parent_directory = parent_directory;
     }
 
-    fn get_parent_directory(&self) -> String {
+    pub fn get_parent_directory(&mut self) -> String {
         self.parent_directory.clone()
     }
 }
+    
