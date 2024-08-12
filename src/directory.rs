@@ -8,6 +8,10 @@ pub struct Directory {
 }
 
 impl Directory {
+    /**
+     * This function creates a new Directory struct with the given
+     * path as the current directory.
+     */
     pub fn new(pwd_param: PathBuf) -> Directory {
         let mut directory = Directory {
             pwd: pwd_param,
@@ -18,6 +22,10 @@ impl Directory {
         directory
     }
 
+    /**
+     * This function creates a base case Directory struct with no
+     * path as the current directory.
+     */
     pub fn new_empty() -> Directory {
         Directory {
             pwd: PathBuf::new(),
@@ -26,6 +34,10 @@ impl Directory {
         }
     }
 
+    /**
+     * This function reads the pwd from the class and then returns
+     * the directories or files in the current directory.
+     */
     pub fn find_forward_directories(&mut self) -> Vec<String> {
         let mut forward_directories = Vec::new();
         for entry in WalkDir::new(&self.pwd).min_depth(1).max_depth(1).into_iter().filter_map(|e| e.ok()) {
@@ -37,6 +49,10 @@ impl Directory {
         forward_directories
     }
 
+    /**
+     * This function reads the pwd from the class and then returns
+     * the path of the parent directory.
+     */
     pub fn find_parent_directory(&mut self) -> String {
         if let Some(parent) = self.pwd.parent().and_then(|p| p.file_name()) {
             let parent_directory = parent.to_string_lossy().into_owned();
@@ -47,11 +63,18 @@ impl Directory {
         }
     }
 
+    /**
+     * This function updates the forward directories and parent directory
+     * values in the Directory struct.
+     */
     fn update_values(&mut self) {
         self.find_forward_directories();
         self.find_parent_directory();
     }
 
+    /**
+     * Setters and getters for the Directory struct.
+     */
     pub fn set_pwd(&mut self, pwd: PathBuf) {
         self.pwd = pwd;
         self.update_values();
