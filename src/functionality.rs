@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
 use std::fs::File;
 use std::io::Write;
@@ -6,16 +6,12 @@ use crate::directory;
 
 pub struct Functionality {
     pwd : PathBuf,
-    forward_directories : Vec<String>,
-    parent_directory : String,
 }
 
 impl Functionality {
-    pub fn new(pwd_param: PathBuf, forward_directories_param: Vec<String>) -> Functionality {
+    pub fn new(pwd_param: PathBuf) -> Functionality {
         let mut func: Functionality = Functionality {
             pwd : pwd_param,
-            forward_directories : forward_directories_param,
-            parent_directory : String::new(),
         };
         func.step_up();
         func
@@ -28,8 +24,29 @@ impl Functionality {
     pub fn step_up(&mut self) -> String {
         let mut pwd_clone = self.pwd.clone();
         pwd_clone.pop();
-        self.parent_directory = pwd_clone.to_string_lossy().into_owned();
         return pwd_clone.to_string_lossy().into_owned();
+    }
+
+    pub fn step_in(&mut self, forward_directories: Vec<String>) -> PathBuf {
+        let mut pwd_clone = self.pwd.clone();
+    
+        if forward_directories.is_empty() {
+            return pwd_clone;
+        }
+    
+        let mut iter = 1;
+        for dir_name in forward_directories.iter() {
+            println!("Directory {}: {}", iter, dir_name);
+            let dir_path = Path::new(dir_name);
+            let obj = WalkDir::new(dir_path).min_depth(1).max_depth(1); // Use max_depth(1) to limit to immediate contents
+            for entry in obj.into_iter().filter_map(|e| e.ok()) {
+                if entry.file_type().is_dir() {
+                    iter += 1;
+                }
+            }
+        }
+        pwd_clone.push(&forward_directories[0]); // Assuming you want to step into the first directory
+        pwd_clone
     }
 
     pub fn find_pwd_name(&mut self) -> String {
@@ -44,12 +61,9 @@ impl Functionality {
         let mut iter: i32 = 1;
         let mut dir_iter: i32 = 1;
         let mut output_file = File::create(output_file_path).expect("Could not create file");
-        for entry in WalkDir::new(directory.get_pwd()).max_depth(1).into_iter() {
+        for entry in WalkDir::new(directory.get_pwd()).min_depth(1).max_depth(1).into_iter() {
             match entry {
                 Ok(path) => {
-                    if path.path() == directory.get_pwd() {
-                        continue;
-                    }
                     if path.path().is_file() {
                         let file_name = path.path().file_name().unwrap().to_string_lossy();
                         writeln!(output_file, "File {}: {}", iter, file_name).expect("Could not write to file");

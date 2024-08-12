@@ -28,7 +28,7 @@ impl Directory {
 
     pub fn find_forward_directories(&mut self) -> Vec<String> {
         let mut forward_directories = Vec::new();
-        for entry in WalkDir::new(&self.pwd).into_iter().filter_map(|e| e.ok()) {
+        for entry in WalkDir::new(&self.pwd).min_depth(1).max_depth(1).into_iter().filter_map(|e| e.ok()) {
             if let Some(file_name) = entry.path().file_name() {
                 forward_directories.push(file_name.to_string_lossy().into_owned());
             }
