@@ -4,11 +4,22 @@ use std::fs::File;
 use std::io::Write;
 use crate::directory;
 
+// Functionality Structure:
 pub struct Functionality {
     pwd : PathBuf,
 }
 
+/**
+ * This struct is used to hold the current directory and provide
+ * functionality to step up, step in, find the name of the current
+ * directory, and output the files and directories in the current
+ * directory to the console and to a file.
+ */
 impl Functionality {
+    /**
+     * This function creates a new Functionality struct with the given
+     * path as the current directory.
+     */
     pub fn new(pwd_param: PathBuf) -> Functionality {
         let mut func: Functionality = Functionality {
             pwd : pwd_param,
@@ -27,6 +38,10 @@ impl Functionality {
         return pwd_clone.to_string_lossy().into_owned();
     }
 
+    /**
+     * This function reads the pwd from the class and then steps into
+     * the first directory in the forward_directories vector.
+     */
     pub fn step_in(&mut self, forward_directories: Vec<String>) -> PathBuf {
         let mut pwd_clone = self.pwd.clone();
     
@@ -49,6 +64,10 @@ impl Functionality {
         pwd_clone
     }
 
+    /**
+     * This function reads the pwd from the class and then returns
+     * the name of the current directory without the rest of the path.
+     */
     pub fn find_pwd_name(&mut self) -> String {
         let pwd_name = self.pwd.file_name().map(|name| name.to_string_lossy().into_owned());
         match pwd_name {
@@ -57,6 +76,13 @@ impl Functionality {
         }
     }
 
+    /**
+     * WARNING: When outputting files to the `output.txt` file it will wipe it clean 
+     * then write the new files and directories to it.
+     * 
+     * This function reads the pwd from the class and then outputs
+     * the files and directories in the current directory to the output file, and to the console.
+     */
     pub fn output_files(&mut self, directory: &mut directory::Directory, output_file_path: &str) {
         let mut iter: i32 = 1;
         let mut dir_iter: i32 = 1;
