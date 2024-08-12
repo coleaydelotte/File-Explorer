@@ -1,35 +1,34 @@
 use std::path::PathBuf;
 use walkdir::WalkDir;
+use std::fs::File;
+use std::io::Write;
 mod directory;
 mod functionality;
 
 fn main() {
+    println!("Welcome to the File Explorer!");
+
+    let output_path: &str = "output.txt";
+    let mut output_file = File::create(output_path).expect("Could not create file");
     let mut directory = directory::Directory::new_empty();
-    directory.set_pwd(PathBuf::from("C:\\Users\\Colea\\Desktop\\CodingProjects\\Rust\\File-Explorer\\src"));
+    let target_path = PathBuf::from("C:\\Users\\Colea\\Desktop\\CodingProjects");
+    directory.set_pwd(target_path.clone());
+    println!("Scanning directory: {}", directory.get_pwd().display());
+
     let forward_dirs: Vec<String> = directory.find_forward_directories();
     let mut functionality = functionality::Functionality::new(directory.get_pwd(), forward_dirs.clone());
-    let mut iter: i32 = 1;
-    let mut dir_iter: i32 = 1;
-    for entry in WalkDir::new(directory.get_pwd()).into_iter().filter_map(|e| e.ok()) {
-        let path = entry.path();
-        if path == directory.get_pwd() {
-            continue;
-        }
-        if path.is_file() {
-            let file_name = path.file_name().unwrap().to_string_lossy();
-            println!("File {}: {}", iter, file_name);
-            iter += 1;
-        } else if path.is_dir() {
-            let dir_name = path.file_name().unwrap().to_string_lossy();
-            println!("Directory {}: {}", dir_iter, dir_name);
-            dir_iter += 1;
-        }
-    }
+
+
+    functionality.output_files(&mut directory, output_path);
     println!();
-    print!("Parent Directory: ");
-    println!("{}", directory.find_parent_directory());
+    writeln!(output_file, "Parent Directory: {}", directory.find_parent_directory()).expect("Could not write to file");
+    println!("Parent Directory: {}", directory.find_parent_directory());
     println!();
-    println!("Current Directory: {:?}", directory.get_pwd());
+    writeln!(output_file, "Current Directory: {}", directory.get_pwd().display()).expect("Could not write to file");
+    println!("Current Directory: {}", directory.get_pwd().display());
     println!();
     println!("Stepping Up A Directory: {}", functionality.step_up());
+    writeln!(output_file, "Stepping Up A Directory: {}", functionality.step_up()).expect("Could not write to file");
+    directory.set_pwd(PathBuf::from(functionality.step_up()));
+    functionality.output_files(&mut directory, output_path);
 }
