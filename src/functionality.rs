@@ -1,12 +1,14 @@
 use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
 use std::fs::File;
-use std::io::Write;
 use crate::directory;
+use std::collections::HashMap;
+use std::io::{stdin, stdout, Write};
 
 // Functionality Structure:
 pub struct Functionality {
     pwd : PathBuf,
+    potential_steps : HashMap<i32,String>
 }
 
 /**
@@ -23,6 +25,7 @@ impl Functionality {
     pub fn new(pwd_param: PathBuf) -> Functionality {
         let mut func: Functionality = Functionality {
             pwd : pwd_param,
+            potential_steps : HashMap::new()
         };
         func.step_up();
         func
@@ -43,7 +46,9 @@ impl Functionality {
      * the first directory in the forward_directories vector.
      */
     pub fn step_in(&mut self, forward_directories: Vec<String>) -> PathBuf {
+        self.clear_potential_steps();
         let mut pwd_clone = self.pwd.clone();
+        let mut input: i32 = 0;
     
         if forward_directories.is_empty() {
             return pwd_clone;
@@ -52,15 +57,24 @@ impl Functionality {
         let mut iter = 1;
         for dir_name in forward_directories.iter() {
             let dir_path = Path::new(dir_name);
-            let obj = WalkDir::new(dir_path).min_depth(1).max_depth(1); // Use max_depth(1) to limit to immediate contents
+            let obj = WalkDir::new(dir_path).min_depth(1).max_depth(1);
             for entry in obj.into_iter().filter_map(|e| e.ok()) {
-                println!("Directory {}: {}", iter, dir_name);
+                self.add_to_potential_steps(iter, dir_name.clone());
+                eprintln!("Directory {}: {}", iter, dir_name);  // Use eprintln! instead of println!
                 if entry.file_type().is_dir() {
                     iter += 1;
                 }
             }
         }
-        pwd_clone.push(&forward_directories[1]); // Assuming you want to step into the first directory
+    
+        print!("Enter the number of the directory you would like to step into: ");
+        let _ = stdout().flush();
+    
+        let mut input_string = String::new();
+        stdin().read_line(&mut input_string).expect("Failed to read line");
+        input = input_string.trim().parse().expect("Please type a number!");
+        input -= 1;
+        pwd_clone.push(&forward_directories[input as usize]);
         pwd_clone
     }
 
@@ -74,6 +88,20 @@ impl Functionality {
             Some(name) => name,
             None => String::new(),
         }
+    }
+
+    /**
+     * This function clears the potential_steps HashMap.
+     */
+    fn clear_potential_steps(&mut self) {
+        self.potential_steps.clear();
+    }
+
+    /**
+     * This function takes a i32 and a String and adds a new index to the potential_steps HashMap.
+     */
+    fn add_to_potential_steps(&mut self, iter: i32, step: String) {
+        self.potential_steps.insert(iter, step);
     }
 
     /**
