@@ -51,16 +51,16 @@ impl Functionality {
     
         let mut iter = 1;
         for dir_name in forward_directories.iter() {
-            println!("Directory {}: {}", iter, dir_name);
             let dir_path = Path::new(dir_name);
             let obj = WalkDir::new(dir_path).min_depth(1).max_depth(1); // Use max_depth(1) to limit to immediate contents
             for entry in obj.into_iter().filter_map(|e| e.ok()) {
+                println!("Directory {}: {}", iter, dir_name);
                 if entry.file_type().is_dir() {
                     iter += 1;
                 }
             }
         }
-        pwd_clone.push(&forward_directories[0]); // Assuming you want to step into the first directory
+        pwd_clone.push(&forward_directories[1]); // Assuming you want to step into the first directory
         pwd_clone
     }
 
