@@ -35,6 +35,12 @@ fn main() {
             forward_dirs = directory.find_forward_directories();
             functionality.output_files(forward_dirs.clone(), false);
         }
+        else if input.trim() == "pwd" {
+            println!("Current Directory: {}", functionality.get_pwd().display());
+        }
+        else if input.trim() == "ls" {
+            functionality.output_files(forward_dirs.clone(), false);
+        }
         else if input.trim() == "cls" {
             functionality.clear_terminal();
         }
