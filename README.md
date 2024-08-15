@@ -1,5 +1,9 @@
 # File-Explorer
 
+## Current State of project:
+
+![First Version](demos/#1CommandLineDemo.gif)
+
 ### Development Roadmap
 <ol>
     <li> ✅ Build a basic directory parser that can read and move up a directory from the command line.
@@ -9,4 +13,6 @@
     <li> Optimize.
     <li> tweaks and user input.
 </ol>
+
+Version: 1.0.0 :)
 <!-- ✅ -->
