@@ -1,4 +1,5 @@
 use std::path::{Path, PathBuf};
+use std::process::Command;
 use walkdir::WalkDir;
 use std::collections::HashMap;
 use std::io::{stdin, stdout, Write};
@@ -121,7 +122,7 @@ impl Functionality {
             if dir_path.is_dir() {
                 println!("Directory {}: {}", dir_iter, dir_path.iter().last().unwrap().to_string_lossy());
                 dir_iter += 1;
-                
+
             } else if print_files && dir_path.is_file() {
                 let file_name = dir_path.file_name().unwrap().to_string_lossy();
                 println!("File {}: {}", iter, file_name);
@@ -132,5 +133,17 @@ impl Functionality {
 
     pub fn get_pwd(&self) -> PathBuf {
         return  self.pwd.clone();
+    }
+
+    pub fn clear_terminal(&self) {
+        if cfg!(target_os = "windows") {
+            Command::new("cmd")
+                .arg("/C")
+                .arg("cls")
+                .status()
+                .expect("Failed to clear terminal");
+        } else {
+            Command::new("clear").status().expect("Failed to clear terminal");
+        }
     }
 }

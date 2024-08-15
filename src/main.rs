@@ -21,6 +21,7 @@ fn main() {
             break;
         }
         else if input.trim() == "in" {
+            functionality.clear_terminal();
             functionality.output_files(forward_dirs.clone(), false);
             let new_path: PathBuf = functionality.step_in(forward_dirs.clone());
             directory.set_pwd(new_path.clone());
@@ -33,6 +34,9 @@ fn main() {
             directory.set_pwd(PathBuf::from(functionality.get_pwd()));
             forward_dirs = directory.find_forward_directories();
             functionality.output_files(forward_dirs.clone(), false);
+        }
+        else if input.trim() == "cls" {
+            functionality.clear_terminal();
         }
         else {
             println!("Invalid Command: {}", input);
