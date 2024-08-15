@@ -2,7 +2,7 @@
 
 ## Current State of project:
 
-![First Version](demos/#1CommandLineDemo.gif)
+![First Version](demos/1CommandLineDemo.gif)
 
 ### Development Roadmap
 <ol>
