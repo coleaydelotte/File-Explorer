@@ -1,7 +1,5 @@
 use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
-use std::fs::File;
-use crate::directory;
 use std::collections::HashMap;
 use std::io::{stdin, stdout, Write};
 
@@ -36,8 +34,6 @@ impl Functionality {
      * the file path of the parent directory.
      */
     pub fn step_up(&mut self) -> String {
-        // pwd_clone.pop();
-        // return pwd_clone.to_string_lossy().into_owned();
         self.pwd = self.pwd.parent().unwrap().to_path_buf();
         println!("{}", self.pwd.display());
         return self.pwd.to_string_lossy().clone().to_string();
@@ -77,6 +73,7 @@ impl Functionality {
         input = input_string.trim().parse().expect("Please type a number!");
         input -= 1;
         pwd_clone.push(&forward_directories[input as usize]);
+        self.pwd = pwd_clone.clone();
         pwd_clone
     }
 
@@ -113,31 +110,22 @@ impl Functionality {
      * This function reads the pwd from the class and then outputs
      * the files and directories in the current directory to the output file, and to the console.
      */
-    pub fn output_files(&mut self, directory: &mut directory::Directory, output_file_path: &str, print_files: bool) {
-        let mut iter: i32 = 1;
+    pub fn output_files(&mut self, forward_dirs: Vec<String>, print_files: bool) {
         let mut dir_iter: i32 = 1;
-        let mut output_file = File::create(output_file_path).expect("Could not create file");
-        for entry in WalkDir::new(directory.get_pwd()).min_depth(1).max_depth(1).into_iter() {
-            match entry {
-                Ok(path) => {
-                    if path.path().is_file() {
-                        if !print_files {
-                            continue;
-                        }
-                        let file_name = path.path().file_name().unwrap().to_string_lossy();
-                        writeln!(output_file, "File {}: {}", iter, file_name).expect("Could not write to file");
-                        println!("File {}: {}", iter, file_name);
-                        iter += 1;
-                    } else if path.path().is_dir() {
-                        let dir_name = path.path().file_name().unwrap().to_string_lossy();
-                        writeln!(output_file, "Directory {}: {}", dir_iter, dir_name).expect("Could not write to file");
-                        println!("Directory {}: {}", dir_iter, dir_name);
-                        dir_iter += 1;
-                    }
-                }
-                Err(e) => {
-                    eprintln!("Error reading entry: {}", e);
-                }
+        let mut iter: i32 = 1;
+        let pwd_clone = self.pwd.clone();
+
+        for dir_name in forward_dirs {
+            let dir_path = PathBuf::from(pwd_clone.join(dir_name));
+
+            if dir_path.is_dir() {
+                println!("Directory {}: {}", dir_iter, dir_path.iter().last().unwrap().to_string_lossy());
+                dir_iter += 1;
+                
+            } else if print_files && dir_path.is_file() {
+                let file_name = dir_path.file_name().unwrap().to_string_lossy();
+                println!("File {}: {}", iter, file_name);
+                iter += 1;
             }
         }
     }
