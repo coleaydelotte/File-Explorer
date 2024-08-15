@@ -23,11 +23,11 @@ impl Functionality {
      * path as the current directory.
      */
     pub fn new(pwd_param: PathBuf) -> Functionality {
-        let mut func: Functionality = Functionality {
+        let func: Functionality = Functionality {
             pwd : pwd_param,
             potential_steps : HashMap::new()
         };
-        func.step_up();
+        // func.step_up();
         func
     }
 
@@ -36,9 +36,11 @@ impl Functionality {
      * the file path of the parent directory.
      */
     pub fn step_up(&mut self) -> String {
-        let mut pwd_clone = self.pwd.clone();
-        pwd_clone.pop();
-        return pwd_clone.to_string_lossy().into_owned();
+        // pwd_clone.pop();
+        // return pwd_clone.to_string_lossy().into_owned();
+        self.pwd = self.pwd.parent().unwrap().to_path_buf();
+        println!("{}", self.pwd.display());
+        return self.pwd.to_string_lossy().clone().to_string();
     }
 
     /**
@@ -60,7 +62,7 @@ impl Functionality {
             let obj = WalkDir::new(dir_path).min_depth(1).max_depth(1);
             for entry in obj.into_iter().filter_map(|e| e.ok()) {
                 self.add_to_potential_steps(iter, dir_name.clone());
-                eprintln!("Directory {}: {}", iter, dir_name);  // Use eprintln! instead of println!
+                eprintln!("Directory {}: {}", iter, dir_name);
                 if entry.file_type().is_dir() {
                     iter += 1;
                 }
@@ -111,7 +113,7 @@ impl Functionality {
      * This function reads the pwd from the class and then outputs
      * the files and directories in the current directory to the output file, and to the console.
      */
-    pub fn output_files(&mut self, directory: &mut directory::Directory, output_file_path: &str) {
+    pub fn output_files(&mut self, directory: &mut directory::Directory, output_file_path: &str, print_files: bool) {
         let mut iter: i32 = 1;
         let mut dir_iter: i32 = 1;
         let mut output_file = File::create(output_file_path).expect("Could not create file");
@@ -119,6 +121,9 @@ impl Functionality {
             match entry {
                 Ok(path) => {
                     if path.path().is_file() {
+                        if !print_files {
+                            continue;
+                        }
                         let file_name = path.path().file_name().unwrap().to_string_lossy();
                         writeln!(output_file, "File {}: {}", iter, file_name).expect("Could not write to file");
                         println!("File {}: {}", iter, file_name);
@@ -135,5 +140,9 @@ impl Functionality {
                 }
             }
         }
+    }
+
+    pub fn get_pwd(&self) -> PathBuf {
+        return  self.pwd.clone();
     }
 }
