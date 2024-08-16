@@ -20,6 +20,7 @@ fn main() {
         if input.trim() == "exit" {
             break;
         }
+        //User can input in the following format: in num_of_directory || in then the user will be prompted for a number.
         if input.starts_with("in") {
             let split: Vec<&str> = input.split_whitespace().collect();
             let index = if split.len() > 1 {
@@ -27,7 +28,6 @@ fn main() {
             } else {
                 0
             };
-        
             if &index - 1 < forward_dirs.len() {
                 functionality.clear_terminal();
                 functionality.output_files(forward_dirs.clone(), false);
@@ -39,7 +39,8 @@ fn main() {
             } else {
                 println!("Invalid Directory Number: {}", index);
             }
-        }        
+        }
+        //when user types up the program will step up a directory.
         if input.trim() == "up" {
             functionality.clear_terminal();
             println!("Stepping Up A Directory: {}", functionality.step_up());
@@ -47,15 +48,19 @@ fn main() {
             forward_dirs = directory.find_forward_directories();
             functionality.output_files(forward_dirs.clone(), false);
         }
+        //pwd will print the current directory.
         if input.trim() == "pwd" {
             println!("Current Directory: {}", functionality.get_pwd().display());
         }
+        //ls will list the directories in the current directory.
         if input.trim() == "ls" {
             functionality.output_files(forward_dirs.clone(), false);
         }
+        //cls will clear the terminal.
         if input.trim() == "cls" {
             functionality.clear_terminal();
         }
+        //if the user types an invalid command it will print out the invalid command, and prompt again.
         else {
             println!("Invalid Command: {}", input);
         }
