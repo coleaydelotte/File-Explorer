@@ -44,7 +44,7 @@ impl Functionality {
      * This function reads the pwd from the class and then steps into
      * the first directory in the forward_directories vector.
      */
-    pub fn step_in(&mut self, forward_directories: Vec<String>) -> PathBuf {
+    pub fn step_in(&mut self, forward_directories: Vec<String>, index: i32) -> PathBuf {
         self.clear_potential_steps();
         let mut pwd_clone = self.pwd.clone();
         let mut input: i32 = 0;
@@ -66,12 +66,16 @@ impl Functionality {
             }
         }
     
-        print!("Enter the number of the directory you would like to step into: ");
-        let _ = stdout().flush();
-    
-        let mut input_string = String::new();
-        stdin().read_line(&mut input_string).expect("Failed to read line");
-        input = input_string.trim().parse().expect("Please type a number!");
+        if index != 0 {
+            input = index;
+        } else {
+            print!("Enter the number of the directory you would like to step into: ");
+            let _ = stdout().flush();
+        
+            let mut input_string = String::new();
+            stdin().read_line(&mut input_string).expect("Failed to read line");
+            input = input_string.trim().parse().expect("Please type a number!");
+        }
         input -= 1;
         pwd_clone.push(&forward_directories[input as usize]);
         self.pwd = pwd_clone.clone();

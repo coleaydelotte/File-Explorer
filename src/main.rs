@@ -20,30 +20,40 @@ fn main() {
         if input.trim() == "exit" {
             break;
         }
-        else if input.trim() == "in" {
-            functionality.clear_terminal();
-            functionality.output_files(forward_dirs.clone(), false);
-            let new_path: PathBuf = functionality.step_in(forward_dirs.clone());
-            directory.set_pwd(new_path.clone());
-            println!("Stepping In A Directory: {}", new_path.display());
-            functionality.clear_terminal();
-            functionality.output_files(directory.find_forward_directories(), false);
-            forward_dirs = directory.find_forward_directories();
-        }
-        else if input.trim() == "up" {
+        if input.starts_with("in") {
+            let split: Vec<&str> = input.split_whitespace().collect();
+            let index = if split.len() > 1 {
+                split[1].parse::<usize>().unwrap_or(0)
+            } else {
+                0
+            };
+        
+            if &index - 1 < forward_dirs.len() {
+                functionality.clear_terminal();
+                functionality.output_files(forward_dirs.clone(), false);
+                let new_path = functionality.step_in(forward_dirs.clone(), index as i32);
+                println!("Stepping In A Directory: {}", new_path.display());
+                directory.set_pwd(PathBuf::from(functionality.get_pwd()));
+                forward_dirs = directory.find_forward_directories();
+                functionality.output_files(forward_dirs.clone(), false);
+            } else {
+                println!("Invalid Directory Number: {}", index);
+            }
+        }        
+        if input.trim() == "up" {
             functionality.clear_terminal();
             println!("Stepping Up A Directory: {}", functionality.step_up());
             directory.set_pwd(PathBuf::from(functionality.get_pwd()));
             forward_dirs = directory.find_forward_directories();
             functionality.output_files(forward_dirs.clone(), false);
         }
-        else if input.trim() == "pwd" {
+        if input.trim() == "pwd" {
             println!("Current Directory: {}", functionality.get_pwd().display());
         }
-        else if input.trim() == "ls" {
+        if input.trim() == "ls" {
             functionality.output_files(forward_dirs.clone(), false);
         }
-        else if input.trim() == "cls" {
+        if input.trim() == "cls" {
             functionality.clear_terminal();
         }
         else {
