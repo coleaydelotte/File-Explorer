@@ -20,47 +20,52 @@ fn main() {
         if input.trim() == "exit" {
             break;
         }
-        //User can input in the following format: in num_of_directory || in then the user will be prompted for a number.
-        if input.starts_with("in") {
-            let split: Vec<&str> = input.split_whitespace().collect();
-            let index = if split.len() > 1 {
-                split[1].parse::<usize>().unwrap_or(0)
-            } else {
-                0
-            };
-            if &index - 1 < forward_dirs.len() {
+        else if input.trim().contains("in") {
+            let index: i32;
+            if input.len() > 2 {
                 functionality.clear_terminal();
-                functionality.output_files(forward_dirs.clone(), false);
-                let new_path = functionality.step_in(forward_dirs.clone(), index as i32);
+                let input_split: Vec<&str> = input.split_whitespace().collect();
+                index = match input_split[1].parse() {
+                    Ok(num) => num,
+                    Err(_) => {
+                        println!("Invalid Command: {}", input);
+                        continue;
+                    }
+                };
+                let new_path = functionality.step_in(forward_dirs.clone(), index);
+                directory.set_pwd(new_path.clone());
                 println!("Stepping In A Directory: {}", new_path.display());
-                directory.set_pwd(PathBuf::from(functionality.get_pwd()));
-                forward_dirs = directory.find_forward_directories();
-                functionality.output_files(forward_dirs.clone(), false);
-            } else {
-                println!("Invalid Directory Number: {}", index);
+                let dirs = directory.find_forward_directories();
+                functionality.output_files(dirs.clone(), false);
+                forward_dirs = dirs;
+            }
+            else {
+                functionality.clear_terminal();
+                 functionality.output_files(forward_dirs.clone(), false);
+                let new_path: PathBuf = functionality.step_in(forward_dirs.clone(), 0);
+                directory.set_pwd(new_path.clone());
+                functionality.clear_terminal();
+                println!("Stepping In A Directory: {}", new_path.display());
+                functionality.output_files(directory.find_forward_directories(), false);
+                forward_dirs = directory.find_forward_directories();   
             }
         }
-        //when user types up the program will step up a directory.
-        if input.trim() == "up" {
+        else if input.trim() == "up" {
             functionality.clear_terminal();
             println!("Stepping Up A Directory: {}", functionality.step_up());
             directory.set_pwd(PathBuf::from(functionality.get_pwd()));
             forward_dirs = directory.find_forward_directories();
             functionality.output_files(forward_dirs.clone(), false);
         }
-        //pwd will print the current directory.
-        if input.trim() == "pwd" {
+        else if input.trim() == "pwd" {
             println!("Current Directory: {}", functionality.get_pwd().display());
         }
-        //ls will list the directories in the current directory.
-        if input.trim() == "ls" {
+        else if input.trim() == "ls" {
             functionality.output_files(forward_dirs.clone(), false);
         }
-        //cls will clear the terminal.
-        if input.trim() == "cls" {
+        else if input.trim() == "cls" {
             functionality.clear_terminal();
         }
-        //if the user types an invalid command it will print out the invalid command, and prompt again.
         else {
             println!("Invalid Command: {}", input);
         }

@@ -47,7 +47,7 @@ impl Functionality {
     pub fn step_in(&mut self, forward_directories: Vec<String>, index: i32) -> PathBuf {
         self.clear_potential_steps();
         let mut pwd_clone = self.pwd.clone();
-        let mut input: i32 = 0;
+        let mut input: i32;
     
         if forward_directories.is_empty() {
             return pwd_clone;
