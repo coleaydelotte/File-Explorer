@@ -38,11 +38,13 @@ impl Directory {
      * This function reads the pwd from the class and then returns
      * the directories and files in the current directory.
      */
-    pub fn find_forward_directories_and_files(&mut self) -> Vec<String> {
+    pub fn find_forward_files(&mut self) -> Vec<String> {
         let mut forward_directories = Vec::new();
         for entry in WalkDir::new(&self.pwd).min_depth(1).max_depth(1).into_iter().filter_map(|e| e.ok()) {
-            if let Some(file_name) = entry.path().file_name() {
-                forward_directories.push(file_name.to_string_lossy().into_owned());
+            if entry.file_type().is_file() {
+                if let Some(file_name) = entry.path().file_name() {
+                    forward_directories.push(file_name.to_string_lossy().into_owned());
+                }
             }
         }
         self.forward_directories = forward_directories.clone();
@@ -84,7 +86,7 @@ impl Directory {
      * values in the Directory struct.
      */
     fn update_values(&mut self) {
-        self.find_forward_directories_and_files();
+        self.find_forward_directories();
         self.find_parent_directory();
     }
 

@@ -127,7 +127,8 @@ impl Functionality {
                 println!("Directory {}: {}", dir_iter, dir_path.iter().last().unwrap().to_string_lossy());
                 dir_iter += 1;
 
-            } else if print_files && dir_path.is_file() {
+            }
+            if print_files && dir_path.is_file() {
                 let file_name = dir_path.file_name().unwrap().to_string_lossy();
                 println!("File {}: {}", iter, file_name);
                 iter += 1;

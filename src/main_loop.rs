@@ -2,7 +2,16 @@ use std::path::PathBuf;
 use std::io::{stdin, stdout, Write};
 use crate::directory;
 use crate::functionality;
+use crate::os_calls;
 
+/**
+ * This function is the main loop for the file explorer. It will
+ * continue to prompt the user for input until the user types
+ * "exit". The user can type "in" to step into a directory, "up"
+ * to step up a directory, "ls" to list the files and directories
+ * in the current directory, "pwd" to print the current directory,
+ * and "cls" to clear the terminal.
+ */
 pub fn main_loop() {
     let target_path = PathBuf::from("C:\\Users");
     let mut directory = directory::Directory::new(target_path.clone());
@@ -13,7 +22,7 @@ pub fn main_loop() {
     let user_input = stdin();
     functionality.output_files(forward_dirs.clone(), false);
     loop {
-        println!("Enter one of the following commands: [exit, in, up, ls, pwd, or cls]");
+        println!("Enter one of the following commands: [exit, in, up, ls, pwd, open, or cls]");
         let mut input = String::new();
         user_input.read_line(&mut input).unwrap();
         input = input.trim().to_string();
@@ -61,7 +70,22 @@ pub fn main_loop() {
             println!("Current Directory: {}", functionality.get_pwd().display());
         }
         else if input.trim() == "ls" {
-            functionality.output_files(forward_dirs.clone(), false);
+            let forward_items = [directory.find_forward_files(), forward_dirs.clone()].concat();
+            functionality.output_files(forward_items, true);
+        }
+        else if input.trim().contains("open") {
+            functionality.clear_terminal();
+            let forward_files = directory.find_forward_files();
+            let input_split: Vec<&str> = input.split_whitespace().collect();
+            let index = match input_split[1].parse::<i32>() {
+                Ok(num) => num,
+                Err(_) => {
+                    println!("Invalid Command: {}", input);
+                    continue;
+                }
+            };
+            let file_path = directory.get_pwd().join(&forward_files[(index - 1) as usize]);
+            os_calls::open_file(file_path.to_str().unwrap());
         }
         else if input.trim() == "cls" {
             functionality.clear_terminal();
