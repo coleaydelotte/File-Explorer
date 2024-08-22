@@ -94,6 +94,10 @@ impl Functionality {
         }
     }
 
+    /**
+     * Takes a vector of strings as parameter containing the names of the forward files,
+     * and returns a vector of u64 integers representing the sizes of the files.
+     */
     pub fn find_file_sizes(&mut self, forward_files: Vec<String>) -> Vec<u64> {
         let mut file_sizes = Vec::new();
         for file_name in forward_files {
@@ -147,10 +151,16 @@ impl Functionality {
         }
     }
 
+    /**
+     * This function returns the current working directory.
+     */
     pub fn get_pwd(&self) -> PathBuf {
         return  self.pwd.clone();
     }
 
+    /**
+     * Clears the terminal screen based on the operating system.
+     */
     pub fn clear_terminal(&self) {
         if cfg!(target_os = "windows") {
             Command::new("cmd")
