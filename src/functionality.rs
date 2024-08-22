@@ -158,8 +158,11 @@ impl Functionality {
                 .arg("cls")
                 .status()
                 .expect("Failed to clear terminal");
-        } else {
-            Command::new("clear").status().expect("Failed to clear terminal");
+        }
+        if cfg!(target_os = "macos") || cfg!(target_os = "linux") {
+            Command::new("clear")
+                .status()
+                .expect("Failed to clear terminal");
         }
     }
 }

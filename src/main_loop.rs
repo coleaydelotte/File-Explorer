@@ -29,6 +29,9 @@ pub fn main_loop() {
         if input.trim() == "exit" {
             break;
         }
+        else if input.trim() == "cls" {
+            functionality.clear_terminal();
+        }
         else if input.trim().contains("in") {
             let index: i32;
             if input.len() > 2 {
@@ -74,8 +77,8 @@ pub fn main_loop() {
             if input.trim().len() > 2 && input.trim() == "ls -s" {
                 for i in 0..forward_files.len() {
                     let sizes = functionality.find_file_sizes(forward_files.clone());
-                    println!("{}: {}", i, forward_files[i]);
-                    println!("Size: {} bytes", sizes[i]);
+                    print!("{}: {}", i + 1, forward_files[i]);
+                    println!(" | Size: {} bytes", sizes[i]);
                 }
             }
             else if input.trim() == "ls" {
@@ -95,9 +98,6 @@ pub fn main_loop() {
             };
             let file_path = directory.get_pwd().join(&forward_files[(index - 1) as usize]);
             os_calls::open_file(file_path.to_str().unwrap());
-        }
-        else if input.trim() == "cls" {
-            functionality.clear_terminal();
         }
         else {
             println!("Invalid Command: {}", input);
