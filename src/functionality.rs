@@ -94,6 +94,17 @@ impl Functionality {
         }
     }
 
+    pub fn find_file_sizes(&mut self, forward_files: Vec<String>) -> Vec<u64> {
+        let mut file_sizes = Vec::new();
+        for file_name in forward_files {
+            let file_path = self.pwd.join(file_name);
+            if let Ok(metadata) = file_path.metadata() {
+                file_sizes.push(metadata.len());
+            }
+        }
+        file_sizes
+    }
+
     /**
      * This function clears the potential_steps HashMap.
      */

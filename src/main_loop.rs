@@ -69,9 +69,18 @@ pub fn main_loop() {
         else if input.trim() == "pwd" {
             println!("Current Directory: {}", functionality.get_pwd().display());
         }
-        else if input.trim() == "ls" {
-            let forward_items = [directory.find_forward_files(), forward_dirs.clone()].concat();
-            functionality.output_files(forward_items, true);
+        else if input.trim().contains("ls") {
+            let forward_files = [directory.find_forward_files(), forward_dirs.clone()].concat();
+            if input.trim().len() > 2 && input.trim() == "ls -s" {
+                for i in 0..forward_files.len() {
+                    let sizes = functionality.find_file_sizes(forward_files.clone());
+                    println!("{}: {}", i, forward_files[i]);
+                    println!("Size: {} bytes", sizes[i]);
+                }
+            }
+            else if input.trim() == "ls" {
+                functionality.output_files(forward_files, true);
+            }
         }
         else if input.trim().contains("open") {
             functionality.clear_terminal();
