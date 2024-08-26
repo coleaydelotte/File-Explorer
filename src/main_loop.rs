@@ -13,7 +13,28 @@ use crate::os_calls;
  * and "cls" to clear the terminal.
  */
 pub fn main_loop() {
-    let target_path = PathBuf::from("C:\\Users");
+    let mut os = String::new();
+    #[cfg(target_os = "macos")] {
+        os = "macos".to_string();
+    }
+    #[cfg(target_os = "windows")] {
+        os = "windows".to_string();
+    }
+    #[cfg(target_os = "linux")] {
+        os = "linux".to_string();
+    }
+
+    //TODO: get home directory in os_calls.
+    let target_path;
+    if os == "macos" {
+        target_path = PathBuf::from("/Users");
+    }
+    else if os == "windows" {
+        target_path = PathBuf::from("C:\\Users");
+    }
+    else {
+        target_path = PathBuf::from("/home");
+    }
     let mut directory = directory::Directory::new(target_path.clone());
     let mut functionality = functionality::Functionality::new(directory.get_pwd());
     let mut forward_dirs: Vec<String> = directory.find_forward_directories();
