@@ -23,11 +23,12 @@ pub fn open_file(file_path: &str) {
             .expect("Failed to open file.");
     }
 
-    #[cfg(target_os = "linux")]
-    {
-        Command::new("xdg-open")
-            .arg(file_path)
-            .output()
-            .expect("Failed to open file.");
-    }
+    //linux is a maybe
+    // #[cfg(target_os = "linux")]
+    // {
+    //     Command::new("xdg-open")
+    //         .arg(file_path)
+    //         .output()
+    //         .expect("Failed to open file.");
+    // }
 }
