@@ -20,9 +20,10 @@ pub fn main_loop() {
     #[cfg(target_os = "windows")] {
         os = "windows".to_string();
     }
-    #[cfg(target_os = "linux")] {
-        os = "linux".to_string();
-    }
+    //linux is a maybe
+    // #[cfg(target_os = "linux")] {
+    //     os = "linux".to_string();
+    // }
 
     //TODO: get home directory in os_calls.
     let target_path;
