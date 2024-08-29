@@ -13,7 +13,7 @@ use crate::os_calls;
  * and "cls" to clear the terminal.
  */
 pub fn main_loop() {
-    let mut os = String::new();
+    let os;
     #[cfg(target_os = "macos")] {
         os = "macos".to_string();
     }

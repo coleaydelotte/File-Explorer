@@ -26,7 +26,6 @@ impl Functionality {
             pwd : pwd_param,
             potential_steps : HashMap::new()
         };
-        // func.step_up();
         func
     }
 
@@ -59,7 +58,6 @@ impl Functionality {
             let obj = WalkDir::new(dir_path).min_depth(1).max_depth(1);
             for entry in obj.into_iter().filter_map(|e| e.ok()) {
                 self.add_to_potential_steps(iter, dir_name.clone());
-                eprintln!("Directory {}: {}", iter, dir_name);
                 if entry.file_type().is_dir() {
                     iter += 1;
                 }
