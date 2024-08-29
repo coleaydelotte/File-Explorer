@@ -14,5 +14,7 @@
     <li> tweaks and user input.
 </ol>
 
+Planning on using Tauri for the GUI but i might use something else that is in full rust.
+
 Version: 1.0.1 :)
 <!-- ✅ -->
