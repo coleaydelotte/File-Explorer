@@ -17,4 +17,7 @@
 Planning on using Tauri for the GUI but i might use something else that is in full rust.
 
 Version: 1.0.1 :)
+
+### Run development server
+`npm run tauri dev` in the project root
 <!-- ✅ -->
