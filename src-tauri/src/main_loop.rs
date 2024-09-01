@@ -127,3 +127,7 @@ pub fn main_loop() {
     }
     println!("Goodbye!");
 }
+
+pub fn process_response(response: String) {
+    println!("{}", response);
+}

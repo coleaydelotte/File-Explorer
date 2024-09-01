@@ -35,6 +35,7 @@ function App() {
         onSubmit={(e) => {
           e.preventDefault();
           greet();
+          // main_loop();
         }}
       >
         <input
