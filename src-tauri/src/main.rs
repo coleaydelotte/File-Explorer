@@ -19,7 +19,7 @@ fn greet(name: &str) -> String {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![greet, main_loop::process_response_step_in])
         // .invoke_handler(tauri::generate_handler![main_loop])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

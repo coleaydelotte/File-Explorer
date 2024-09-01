@@ -128,6 +128,86 @@ pub fn main_loop() {
     println!("Goodbye!");
 }
 
-pub fn process_response(response: String) {
-    println!("{}", response);
+/**
+ * Passed a full filepath.
+ */
+pub fn process_response_step_in(response: &String) -> Vec<String> {
+    let mut directory = directory::Directory::new(PathBuf::from(response.trim()));
+    let mut functionality = functionality::Functionality::new(directory.get_pwd());
+    let forward_dirs = directory.find_forward_directories();
+    let input = response.trim();
+    let index: i32;
+    if input.len() > 2 {
+        functionality.clear_terminal();
+        let input_split: Vec<&str> = input.split_whitespace().collect();
+        index = match input_split[1].parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Invalid Command: {}", input);
+                return directory.find_forward_directories();
+            }
+        };
+        let new_path = functionality.step_in(forward_dirs.clone(), index);
+        directory.set_pwd(new_path.clone());
+        return directory.find_forward_directories();
+    }
+    else {
+        let new_path: PathBuf = functionality.step_in(forward_dirs.clone(), 0);
+        directory.set_pwd(new_path.clone());
+        return directory.find_forward_directories();
+    }
+}
+
+/**
+ * Passed a full filepath.
+ * 
+ * Returns the parent directory's forward directories.
+ */
+pub fn process_response_step_up(response: &String) -> Vec<String> {
+    let mut directory = directory::Directory::new(PathBuf::from(response.trim()));
+    let mut functionality = functionality::Functionality::new(directory.get_pwd());
+    directory.set_pwd(PathBuf::from(functionality.step_up()));
+    return directory.find_forward_directories();
+}
+
+/**
+ * Passed a full filepath.
+ * 
+ * Returns the forward files and directories in the current directory.
+ */
+pub fn process_response_ls(response: &String) -> Vec<String> {
+    let mut directory = directory::Directory::new(PathBuf::from(response.trim()));
+    let forward_files = [directory.find_forward_files(), directory.find_forward_directories()].concat();
+    return forward_files;
+}
+
+/**
+ * Passed a full filepath.
+ * 
+ * Returns the current directory as a string.
+ */
+pub fn process_response_pwd(response: &String) -> String {
+    let functionality = functionality::Functionality::new(PathBuf::from(response.trim()));
+    return functionality.get_pwd().display().to_string();
+}
+
+/**
+ * Passed a full filepath.
+ * 
+ * Opens the file at the given index in the current directory.
+ */
+pub fn process_response_open(response: &String) {
+    let mut directory = directory::Directory::new(PathBuf::from(response.trim()));
+    let forward_files = directory.find_forward_files();
+    let input = response.trim();
+    let input_split: Vec<&str> = input.split_whitespace().collect();
+    let index = match input_split[1].parse::<i32>() {
+        Ok(num) => num,
+        Err(_) => {
+            println!("Invalid Command: {}", input);
+            return;
+        }
+    };
+    let file_path = directory.get_pwd().join(&forward_files[(index - 1) as usize]);
+    os_calls::open_file(file_path.to_str().unwrap());
 }
