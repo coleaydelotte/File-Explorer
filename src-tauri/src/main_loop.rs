@@ -130,6 +130,8 @@ pub fn main_loop() {
 
 /**
  * Passed a full filepath.
+ * 
+ * Returns the forward directories in the new directory.
  */
 pub fn process_response_step_in(response: &String) -> Vec<String> {
     let mut directory = directory::Directory::new(PathBuf::from(response.trim()));

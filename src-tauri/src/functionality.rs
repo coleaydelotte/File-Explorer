@@ -150,6 +150,33 @@ impl Functionality {
     }
 
     /**
+     * This function reads the pwd from the class and then returns what would be printed
+     * as a vector of strings to be used in the Tauri application.
+     */
+    pub fn output_files_as_vector(&mut self, forward_dirs: Vec<String>, print_files: bool) -> Vec<String> {
+        let mut dir_iter: i32 = 1;
+        let mut iter: i32 = 1;
+        let pwd_clone = self.pwd.clone();
+        let mut output: Vec<String> = Vec::new();
+
+        for dir_name in forward_dirs {
+            let dir_path = PathBuf::from(pwd_clone.join(dir_name));
+
+            if dir_path.is_dir() {
+                output.push(format!("Directory {}: {}", dir_iter, dir_path.iter().last().unwrap().to_string_lossy()));
+                dir_iter += 1;
+
+            }
+            if print_files && dir_path.is_file() {
+                let file_name = dir_path.file_name().unwrap().to_string_lossy();
+                output.push(format!("File {}: {}", iter, file_name));
+                iter += 1;
+            }
+        }
+        output
+    }
+
+    /**
      * This function returns the current working directory.
      */
     pub fn get_pwd(&self) -> PathBuf {
