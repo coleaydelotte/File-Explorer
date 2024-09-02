@@ -9,6 +9,7 @@ function App() {
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+    // Have not gotten rid of base front end because I want to learn the hover effect.
     setGreetMsg(await invoke("greet", { name }));
   }
 
@@ -35,7 +36,6 @@ function App() {
         onSubmit={(e) => {
           e.preventDefault();
           greet();
-          // main_loop();
         }}
       >
         <input
