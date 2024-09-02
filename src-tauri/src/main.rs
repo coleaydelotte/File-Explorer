@@ -1,6 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::path::PathBuf;
+
 mod main_loop;
 mod functionality;
 mod directory;
@@ -32,14 +34,22 @@ fn step_up(path: String) -> (Vec<String>, String) {
     return (forward_dirs, new_path.to_string());
 }
 
-fn open() {
+#[tauri::command]
+fn open_file(index: i32, path: String) {
+    main_loop::process_response_open(index, &path);
+}
 
+#[tauri::command]
+fn output_files_as_vector(path: String, print_files: bool) -> Vec<String> {
+    let mut directory = directory::Directory::new(PathBuf::from(path.trim()));
+    let mut functionality = functionality::Functionality::new(directory.get_pwd());
+    return functionality.output_files_as_vector(directory.find_forward_files(), print_files);
 }
 
 // Building GUI and loading Utility.
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, step_in, step_up])
+        .invoke_handler(tauri::generate_handler![greet, step_in, step_up, open_file, output_files_as_vector])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

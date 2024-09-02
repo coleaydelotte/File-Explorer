@@ -188,30 +188,11 @@ pub fn process_response_ls(response: &String) -> Vec<String> {
 /**
  * Passed a full filepath.
  * 
- * Returns the current directory as a string.
- */
-pub fn process_response_pwd(response: &String) -> String {
-    let functionality = functionality::Functionality::new(PathBuf::from(response.trim()));
-    return functionality.get_pwd().display().to_string();
-}
-
-/**
- * Passed a full filepath.
- * 
  * Opens the file at the given index in the current directory.
  */
-pub fn process_response_open(response: &String) {
-    let mut directory = directory::Directory::new(PathBuf::from(response.trim()));
+pub fn process_response_open(index: i32, pwd: &String) {
+    let mut directory = directory::Directory::new(PathBuf::from(pwd.trim()));
     let forward_files = directory.find_forward_files();
-    let input = response.trim();
-    let input_split: Vec<&str> = input.split_whitespace().collect();
-    let index = match input_split[1].parse::<i32>() {
-        Ok(num) => num,
-        Err(_) => {
-            println!("Invalid Command: {}", input);
-            return;
-        }
-    };
     let file_path = directory.get_pwd().join(&forward_files[(index - 1) as usize]);
     os_calls::open_file(file_path.to_str().unwrap());
 }
