@@ -1,5 +1,7 @@
 use std::path::PathBuf;
 use std::io::{stdin, stdout, Write};
+use serde_json::value::Index;
+
 use crate::directory;
 use crate::functionality;
 use crate::os_calls;
