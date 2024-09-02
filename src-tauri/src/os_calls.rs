@@ -32,3 +32,18 @@ pub fn open_file(file_path: &str) {
     //         .expect("Failed to open file.");
     // }
 }
+
+pub fn get_os() -> String {
+    let os;
+    #[cfg(target_os = "macos")] {
+        os = "macos".to_string();
+    }
+    #[cfg(target_os = "windows")] {
+        os = "windows".to_string();
+    }
+    //linux is a maybe
+    // #[cfg(target_os = "linux")] {
+    //     os = "linux".to_string();
+    // }
+    os
+}
