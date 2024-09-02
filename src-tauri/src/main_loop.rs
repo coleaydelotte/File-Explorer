@@ -135,8 +135,8 @@ pub fn main_loop() {
  * 
  * Returns the forward directories in the new directory.
  */
-pub fn process_response_step_in(response: &String) -> Vec<String> {
-    let mut directory = directory::Directory::new(PathBuf::from(response.trim()));
+pub fn process_response_step_in(response: &String, pwd: String) -> (Vec<String>, String) {
+    let mut directory = directory::Directory::new(PathBuf::from(pwd.trim()));
     let mut functionality = functionality::Functionality::new(directory.get_pwd());
     let forward_dirs = directory.find_forward_directories();
     let input = response.trim();
@@ -148,17 +148,17 @@ pub fn process_response_step_in(response: &String) -> Vec<String> {
             Ok(num) => num,
             Err(_) => {
                 println!("Invalid Command: {}", input);
-                return directory.find_forward_directories();
+                return (directory.find_forward_directories(), directory.get_pwd().display().to_string());
             }
         };
         let new_path = functionality.step_in(forward_dirs.clone(), index);
         directory.set_pwd(new_path.clone());
-        return directory.find_forward_directories();
+        return (directory.find_forward_directories(), directory.get_pwd().display().to_string());
     }
     else {
         let new_path: PathBuf = functionality.step_in(forward_dirs.clone(), 0);
         directory.set_pwd(new_path.clone());
-        return directory.find_forward_directories();
+        return (directory.find_forward_directories(), directory.get_pwd().display().to_string());
     }
 }
 
@@ -167,11 +167,11 @@ pub fn process_response_step_in(response: &String) -> Vec<String> {
  * 
  * Returns the parent directory's forward directories.
  */
-pub fn process_response_step_up(response: &String) -> Vec<String> {
-    let mut directory = directory::Directory::new(PathBuf::from(response.trim()));
+pub fn process_response_step_up(path: &String) -> (Vec<String>, String) {
+    let mut directory = directory::Directory::new(PathBuf::from(path.trim()));
     let mut functionality = functionality::Functionality::new(directory.get_pwd());
     directory.set_pwd(PathBuf::from(functionality.step_up()));
-    return directory.find_forward_directories();
+    return (directory.find_forward_directories(), directory.get_pwd().display().to_string());
 }
 
 /**
@@ -181,7 +181,7 @@ pub fn process_response_step_up(response: &String) -> Vec<String> {
  */
 pub fn process_response_ls(response: &String) -> Vec<String> {
     let mut directory = directory::Directory::new(PathBuf::from(response.trim()));
-    let forward_files = [directory.find_forward_files(), directory.find_forward_directories()].concat();
+    let forward_files = [directory.find_forward_directories(), directory.find_forward_files()].concat();
     return forward_files;
 }
 
