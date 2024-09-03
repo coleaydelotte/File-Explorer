@@ -1,5 +1,7 @@
 <!-- @/src/.App.jsx -->
 
+# If the Rust back end can pass a vector and Tauri automatically turns it into a array.
+
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
