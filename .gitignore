@@ -25,3 +25,6 @@ dist-ssr
 
 # Rust-Analyzer Files
 /target/
+
+# Holder Files
+*.txt
