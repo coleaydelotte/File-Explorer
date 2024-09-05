@@ -2,6 +2,7 @@ use crate::main_loop;
 use crate::functionality;
 use crate::directory;
 use crate::os_calls;
+use std::io::Write;
 use std::path::PathBuf;
 
 /**
@@ -37,12 +38,27 @@ pub fn open_file(index: i32, path: String) {
 
 #[tauri::command]
 pub fn output_files_as_vector(path: String, print_files: bool) -> Vec<String> {
-    let mut directory = directory::Directory::new(PathBuf::from(path.trim()));
+    let path_1 = "/Users/aydelottec".to_string();
+    let path_buf = PathBuf::from(path_1.trim());
+    let mut directory = directory::Directory::new(path_buf);
     let mut functionality = functionality::Functionality::new(directory.get_pwd());
-    return functionality.output_files_as_vector(directory.find_forward_files(), print_files);
+    let forward_files = directory.find_forward_files();
+    // let mut vectr: Vec<String> = Vec::new();
+    // vectr.push("Hello".to_string());
+    // vectr.push("World".to_string());
+    return functionality.output_files_as_vector(forward_files, print_files);
 }
 
 #[tauri::command]
 pub fn get_os() -> String {
     return os_calls::get_os();
+}
+
+#[tauri::command]
+pub fn get_arr(name: &str) -> Vec<String> {
+    let mut arr: Vec<String> = Vec::new();
+    arr.push("Hello".to_string());
+    arr.push("World".to_string());
+    arr.push(name.to_string());
+    return arr;
 }
