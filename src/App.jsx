@@ -20,24 +20,33 @@ function App() {
 testForwardFiles();
 
   return (
-    <div className="container">
-      <p>Files:</p>
-      <Box>
-        {dirsToPrint.map((item, index) => (
-          <Box
-            className="mapBox"
-            key={index}
-            alignItems="center"
+    <Box
+      className="container"
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      width={"100%"}
+      height={"100%"}
+    >
+      {dirsToPrint.map((item, index) => (
+        <Box
+          className="mapBox"
+          key={index}
+          alignItems="center"
+          border={1}
+          borderColor={"primary.main"}
+          margin={1}
+          width="25%"
+          justifyContent={"center"}
+        >
+          <Typography
+            justifyContent="center"
           >
-            <Typography
-              justifyContent="center"
-            >
-              {item}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-    </div>
+            {item}
+          </Typography>
+        </Box>
+      ))}
+    </Box>
   );
 }
 

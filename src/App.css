@@ -49,7 +49,11 @@
 .mapBox {
   display: flex;
   justify-content: center;
-  margin-top: 2em;
+  padding: 1em;
+}
+
+.mapBox:hover {
+  filter: drop-shadow(0 0 2em #24c8db);
 }
 
 a {
