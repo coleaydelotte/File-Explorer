@@ -46,6 +46,12 @@
   justify-content: center;
 }
 
+.mapBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+
 a {
   font-weight: 500;
   color: #646cff;

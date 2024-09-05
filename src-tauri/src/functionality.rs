@@ -173,7 +173,7 @@ impl Functionality {
                 iter += 1;
             }
         }
-        output
+        return output;
     }
 
     /**
