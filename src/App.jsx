@@ -7,7 +7,7 @@ function App() {
   const [dirsToPrint, setDirsToPrint] = useState([]);
 
   async function testForwardFiles() {
-    let path = '/Users/aydelottec';
+    let path = 'C:\\Users\\Colea\\Desktop\\CodingProjects\\Rust\\File-Explorer\\src';
     let boolean = true;
     try {
         let result = await invoke("output_files_as_vector", { path: path, printFiles: boolean });
