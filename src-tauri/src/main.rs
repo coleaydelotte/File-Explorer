@@ -16,7 +16,8 @@ fn main() {
             front_end_util::step_up, 
             front_end_util::open_file, 
             front_end_util::output_files_as_vector, 
-            front_end_util::get_os
+            front_end_util::get_os,
+            front_end_util::format_path_for_windows
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

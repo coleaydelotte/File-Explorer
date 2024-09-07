@@ -29,6 +29,14 @@ impl Functionality {
         func
     }
 
+    pub fn new_empty() -> Functionality {
+        let func: Functionality = Functionality {
+            pwd : PathBuf::new(),
+            potential_steps : HashMap::new()
+        };
+        func
+    }
+
     /**
      * This function reads the pwd from the class and then returns
      * the file path of the parent directory.
@@ -181,6 +189,14 @@ impl Functionality {
      */
     pub fn get_pwd(&self) -> PathBuf {
         return  self.pwd.clone();
+    }
+
+    /**
+     * This function formats the path passed as parameter for Windows.
+     */
+    pub fn format_path_for_windows(&self, mut path: String) -> String {
+        path = path.replace("\\", "\\\\");
+        return path;
     }
 
     /**
