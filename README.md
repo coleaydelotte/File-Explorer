@@ -8,6 +8,7 @@
 <ol>
     <li> ✅ Build a basic directory parser that can read and move up a directory from the command line.
     <li> ✅ Add functionality to step into files and be a fully functional command line directory parsers.
+    <li> Create a simple GUI where you can pass a path display files, step in, step out, or open a file.
     <li> Build a Gui using Tauri displaying the files with with drives and clicking on a folder then clicking open will trigger a change in your present working directory.
     <li> Add functionality to move files, or copy them somewhere, as well as open them with various programs.
     <li> Optimize.
