@@ -1,7 +1,5 @@
 # File-Explorer
 
-![Technologies](.demos\Technologies.png)
-
 ### Development Roadmap
 <ol>
     <li> ✅ Build a basic directory parser that can read and move up a directory from the command line.
@@ -13,7 +11,8 @@
     <li> tweaks and user input.
 </ol>
 
-Planning on using Tauri for the GUI but i might use something else that is in full rust.
+### Technologies Used
+![Technologies](./demos/Technologies.png)
 
 Version: 1.0.1 :)
 
@@ -21,6 +20,10 @@ Version: 1.0.1 :)
 
 ![First Version](demos/1CommandLineDemo.gif) -->
 
-### Run development server
-`npm run tauri dev` in the project root
+### Run Program
+You will need Node.js installed if it is not installed you can install it [here](https://nodejs.org/en/download/package-manager).
+
+Run `npm install` in the project root.
+
+Run `npm run tauri dev` also in the project root.
 <!-- ✅ -->
