@@ -16,7 +16,7 @@ function App() {
     }
     let boolean = true;
     try {
-        let result = await invoke("output_files_as_vector", { path: path, printFiles: boolean, os: os });
+        let result = await invoke("output_files_as_vector", { path: path, printFiles: boolean});
         setDirsToPrint(result);
     } catch (error) {
         setDirsToPrint(["Error: ", error]);
