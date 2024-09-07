@@ -1,8 +1,6 @@
 # File-Explorer
 
-## Current State of project:
-
-![First Version](demos/1CommandLineDemo.gif)
+![Technologies](.demos\Technologies.png)
 
 ### Development Roadmap
 <ol>
@@ -18,6 +16,10 @@
 Planning on using Tauri for the GUI but i might use something else that is in full rust.
 
 Version: 1.0.1 :)
+
+<!-- ## Current State of project:
+
+![First Version](demos/1CommandLineDemo.gif) -->
 
 ### Run development server
 `npm run tauri dev` in the project root
