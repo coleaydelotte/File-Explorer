@@ -38,14 +38,18 @@ useEffect(() => {
 }, []);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}
+      sx={{
+        width: "100vw",
+        height: "100vh"
+      }}
+    >
       <Box
         className="container"
         display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        width={"100%"}
-        height={"100%"}
+        height={"100vh"}
+        width={"100vw"}
+        bgcolor={"#282c34"}
       >
         <form
           onSubmit={ (e) => {
@@ -55,11 +59,14 @@ useEffect(() => {
           }
         >
           <Stack
+            margin={2}
             spacing={2}
-            directions="column"
+            direction="column"
+            sx={{
+              width: "15em"
+            }}
           >
             <TextField
-              className="textField"
               required
               label="Path"
               text-color="#f6f6f6"
@@ -67,7 +74,9 @@ useEffect(() => {
                 (e) => setPath(e.target.value)
               }
             />
-            <Button type="submit">Submit</Button>
+            <Button
+              type="submit"
+            >Submit</Button>
           </Stack>
         </form>
         {dirsToPrint.length > 0 && (
@@ -77,12 +86,17 @@ useEffect(() => {
               key={index}
               alignItems="center"
               border={1}
-              borderColor={"primary.main"}
+              borderRadius={3}
+              borderColor={"#f6f6f6"}
               margin={1}
-              width="25%"
               justifyContent={"center"}
+              sx={{
+                width: "15em",
+                height: "0.25em"
+              }}
             >
               <Typography
+                color="#f6f6f6"
                 justifyContent="center"
               >
                 {item}
