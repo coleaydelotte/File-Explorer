@@ -24,11 +24,12 @@ pub fn step_in(response: String, pwd: String) -> (Vec<String>, String) {
 }
 
 #[tauri::command]
-pub fn step_up(path: String) -> (Vec<String>, String) {
+pub fn step_up(path: String) -> String {
     let forward_dirs;
     let new_path;
     (forward_dirs, new_path) = main_loop::process_response_step_up(&path);
-    return (forward_dirs, new_path.to_string());
+    // return (forward_dirs, new_path.to_string());
+    return new_path.to_string();
 }
 
 #[tauri::command]

@@ -9,17 +9,32 @@ function App() {
   const [os, setOs] = useState("");
   const [path, setPath] = useState("");
   const [dirsToPrint, setDirsToPrint] = useState([]);
+  const [display, setDisplay] = useState(false);
 
-  async function getForwardFiles() {
+  async function formatForOS () {
     if (os === "windows") {
       setPath(await invoke("format_path_for_windows", { path: path }));
     }
+  }
+
+  async function getForwardFiles() {
     let boolean = true;
     try {
-        let result = await invoke("output_files_as_vector", { path: path, printFiles: boolean});
-        setDirsToPrint(result);
+      let result = await invoke("output_files_as_vector", { path: path, printFiles: boolean});
+      setDirsToPrint(result);
+      setDisplay(true);
     } catch (error) {
-        setDirsToPrint(["Error: ", error]);
+      setDirsToPrint(["Error: ", error]);
+    }
+  }
+
+  async function stepUp() {
+    try {
+      setPath(await invoke("step_up", { path: path }));
+      setDisplay(false);
+      getForwardFiles();
+    } catch (error) {
+      setPath("Error: " + error);
     }
   }
 
@@ -34,7 +49,7 @@ function App() {
 
 useEffect(() => {
   retrieveOs();
-  // getForwardFiles();
+
 }, []);
 
   return (
@@ -54,6 +69,7 @@ useEffect(() => {
         <form
           onSubmit={ (e) => {
               e.preventDefault();
+              formatForOS();
               getForwardFiles();
             }
           }
@@ -74,12 +90,18 @@ useEffect(() => {
                 (e) => setPath(e.target.value)
               }
             />
-            <Button
-              type="submit"
-            >Submit</Button>
+            <Button type="submit">Submit</Button>
+            <form onSubmit={
+              (e) => {
+                e.preventDefault();
+                stepUp();
+              }
+            }>
+              <Button type="submit">Step Up</Button>
+            </form>
           </Stack>
         </form>
-        {dirsToPrint.length > 0 && (
+        {display && dirsToPrint.length > 0 && (
           dirsToPrint.map((item, index) => (
             <Box
               className="mapBox"

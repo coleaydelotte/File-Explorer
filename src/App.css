@@ -41,13 +41,13 @@
 }
 
 /* Having issues with these next two. */
-.textFieldOutline.Mui-focused .MuiOutlinedInput-notchedOutline {
+/* .textFieldOutline.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: #d3b3e0;
 }
 
 .textFieldOutline.Mui-focused .MuiInputBase-input {
   color: #d3b3e0;
-}
+} */
 
 a {
   font-weight: 500;
