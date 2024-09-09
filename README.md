@@ -1,5 +1,7 @@
 # File-Explorer
 
+Uses a fully written in rust back-end, and a modern front-end framework (Vite), using Tauri to bridge the gap.
+
 ### Development Roadmap
 <ol>
     <li> ✅ Build a basic directory parser that can read and move up a directory from the command line.
