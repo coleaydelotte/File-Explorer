@@ -49,6 +49,18 @@
   color: #d3b3e0;
 } */
 
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+}
+
+
 a {
   font-weight: 500;
   color: #646cff;

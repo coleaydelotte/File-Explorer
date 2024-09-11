@@ -15,6 +15,11 @@ pub fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
+/**
+ * Response is the index of file to step into
+ * 
+ * pwd is the full filepath to be mutated.
+ */
 #[tauri::command]
 pub fn step_in(response: String, pwd: String) -> (Vec<String>, String) {
     let forward_dirs;

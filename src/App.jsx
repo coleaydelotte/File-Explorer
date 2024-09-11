@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { Box, Typography, TextField, Button, Stack } from "@mui/material";
-import {  ThemeProvider } from "@mui/material/styles";
-import theme from "./theme";
+import { ThemeProvider } from "@mui/material";
+import theme from "./theme"
 import "./App.css";
 
 function App() {
   const [os, setOs] = useState("");
   const [path, setPath] = useState("");
   const [dirsToPrint, setDirsToPrint] = useState([]);
-  const [display, setDisplay] = useState(false);
+  const [displayPath, setDisplayPath] = useState("")
 
   async function formatForOS () {
     if (os === "windows") {
@@ -22,7 +22,6 @@ function App() {
     try {
       let result = await invoke("output_files_as_vector", { path: path, printFiles: boolean});
       setDirsToPrint(result);
-      setDisplay(true);
     } catch (error) {
       setDirsToPrint(["Error: ", error]);
     }
@@ -30,9 +29,9 @@ function App() {
 
   async function stepUp() {
     try {
-      setPath(await invoke("step_up", { path: path }));
-      setDisplay(false);
-      getForwardFiles();
+      let p = await invoke("step_up", { path: path });
+      setDisplayPath(p);
+      // getForwardFiles();
     } catch (error) {
       setPath("Error: " + error);
     }
@@ -53,12 +52,7 @@ useEffect(() => {
 }, []);
 
   return (
-    <ThemeProvider theme={theme}
-      sx={{
-        width: "100vw",
-        height: "100vh"
-      }}
-    >
+    <ThemeProvider theme={theme}>
       <Box
         className="container"
         display={"flex"}
@@ -66,6 +60,7 @@ useEffect(() => {
         width={"100vw"}
         bgcolor={"#282c34"}
       >
+        <Typography color="#f6f6f6" variant="h6">Current path: {displayPath}</Typography>
         <form
           onSubmit={ (e) => {
               e.preventDefault();
@@ -91,17 +86,14 @@ useEffect(() => {
               }
             />
             <Button type="submit">Submit</Button>
-            <form onSubmit={
-              (e) => {
-                e.preventDefault();
-                stepUp();
-              }
-            }>
-              <Button type="submit">Step Up</Button>
-            </form>
+            <Button 
+              onClick={() => stepUp()}
+            >
+              Step Up
+            </Button>
           </Stack>
         </form>
-        {display && dirsToPrint.length > 0 && (
+        {dirsToPrint.length > 0 && (
           dirsToPrint.map((item, index) => (
             <Box
               className="mapBox"

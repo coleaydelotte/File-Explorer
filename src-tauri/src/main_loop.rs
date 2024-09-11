@@ -132,6 +132,7 @@ pub fn main_loop() {
 
 /**
  * Passed a full filepath.
+ * And index of folder to step into.
  * 
  * Returns the forward directories in the new directory.
  */
