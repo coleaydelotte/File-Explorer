@@ -102,11 +102,11 @@ impl Directory {
         self.pwd.clone()
     }
 
-    pub fn get_forward_directories(&self) -> Vec<String> {
-        self.forward_directories.clone()
-    }
+    // pub fn get_forward_directories(&self) -> Vec<String> {
+    //     self.forward_directories.clone()
+    // }
 
-    pub fn get_parent_directory(&self) -> String {
-        self.parent_directory.clone()
-    }
+    // pub fn get_parent_directory(&self) -> String {
+    //     self.parent_directory.clone()
+    // }
 }

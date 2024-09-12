@@ -2,7 +2,6 @@ use crate::main_loop;
 use crate::functionality;
 use crate::directory;
 use crate::os_calls;
-use std::io::Write;
 use std::path::PathBuf;
 
 /**
