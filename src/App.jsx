@@ -29,13 +29,13 @@ function App() {
 
   async function stepUp() {
     try {
-      let p = await invoke("step_up", { path: path });
-      setDisplayPath(p);
-      // getForwardFiles();
+      let newPath = await invoke("step_up", { path: path });
+      setDisplayPath(newPath);
+      setPath(newPath); // This will trigger the second useEffect to update the file list
     } catch (error) {
       setPath("Error: " + error);
     }
-  }
+  }  
 
   async function retrieveOs() {
     try {
@@ -48,8 +48,13 @@ function App() {
 
 useEffect(() => {
   retrieveOs();
-
 }, []);
+
+useEffect(() => {
+  if (path) {
+    getForwardFiles();
+  }
+}, [path]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,11 +68,9 @@ useEffect(() => {
         <Typography color="#f6f6f6" variant="h6">Current path: {displayPath}</Typography>
         <form
           onSubmit={ (e) => {
-              e.preventDefault();
-              formatForOS();
-              getForwardFiles();
-            }
-          }
+            e.preventDefault()
+            stepUp()
+          }}
         >
           <Stack
             margin={2}
@@ -82,15 +85,16 @@ useEffect(() => {
               label="Path"
               text-color="#f6f6f6"
               onChange={
-                (e) => setPath(e.target.value)
+                (e) => {
+                  setPath(e.target.value)
+                  formatForOS(e.target.value)
+                }
               }
             />
-            <Button type="submit">Submit</Button>
-            <Button 
-              onClick={() => stepUp()}
-            >
+            <Button type="submit">
               Step Up
             </Button>
+            {/* <Button type="submit">Submit</Button> */}
           </Stack>
         </form>
         {dirsToPrint.length > 0 && (

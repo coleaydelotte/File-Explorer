@@ -4,6 +4,9 @@ use crate::directory;
 use crate::os_calls;
 use std::path::PathBuf;
 
+// use std::io::Write;
+// potential output to files
+
 /**
  * Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
  * 
