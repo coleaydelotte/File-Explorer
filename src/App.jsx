@@ -27,6 +27,14 @@ function App() {
     }
   }
 
+  async function openFile(index) {
+    try {
+      await invoke("open_file", { index: index, path: path });
+    } catch (error) {
+      setPath("Error: " + error);
+    }
+  }
+
   async function stepUp() {
     try {
       let newPath = await invoke("step_up", { path: path });
@@ -97,6 +105,9 @@ useEffect(() => {
             {/* <Button type="submit">Submit</Button> */}
           </Stack>
         </form>
+        {dirsToPrint.length > 2 && (
+          openFile(1)
+        )}
         {dirsToPrint.length > 0 && (
           dirsToPrint.map((item, index) => (
             <Box
