@@ -12,8 +12,12 @@ function App() {
   const [displayPath, setDisplayPath] = useState("")
 
   async function formatForOS () {
-    if (os === "windows") {
-      setPath(await invoke("format_path_for_windows", { path: path }));
+    try {
+      if (os === "windows") {
+        setPath(await invoke("format_path_for_windows", { path: path }));
+      }
+    } catch (error) {
+      setPath("Error: " + error);
     }
   }
 
@@ -105,9 +109,9 @@ useEffect(() => {
             {/* <Button type="submit">Submit</Button> */}
           </Stack>
         </form>
-        {dirsToPrint.length > 2 && (
+        {/* {dirsToPrint.length > 2 && (
           openFile(1)
-        )}
+        )} */}
         {dirsToPrint.length > 0 && (
           dirsToPrint.map((item, index) => (
             <Box
