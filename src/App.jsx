@@ -11,6 +11,8 @@ function App() {
   const [dirsToPrint, setDirsToPrint] = useState([]);
   const [displayPath, setDisplayPath] = useState("")
 
+  let forwardDirs = new Map();
+
   async function formatForOS () {
     try {
       if (os === "windows") {
@@ -43,7 +45,7 @@ function App() {
     try {
       let newPath = await invoke("step_up", { path: path });
       setDisplayPath(newPath);
-      setPath(newPath); // This will trigger the second useEffect to update the file list
+      setPath(newPath);
     } catch (error) {
       setPath("Error: " + error);
     }
@@ -57,7 +59,6 @@ function App() {
       setOs("Error: " + error);
     }
   }
-
 useEffect(() => {
   retrieveOs();
 }, []);
