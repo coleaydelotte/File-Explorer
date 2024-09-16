@@ -69,6 +69,12 @@ useEffect(() => {
   }
 }, [path]);
 
+useEffect(() => {
+  if (dirsToPrint.size > 0) {
+    forwardDirs = new Map(dirsToPrint);
+  }
+}, [dirsToPrint]);
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -137,6 +143,10 @@ useEffect(() => {
               </Typography>
             </Box>
           ))
+        )}
+        <Typography>Dirs: Map</Typography>
+        {forwardDirs.size > 0 && (
+          <Typography color="#f6f6f6">Forward Dirs Exist</Typography>
         )}
       </Box>
     </ThemeProvider>
