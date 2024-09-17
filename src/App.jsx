@@ -113,7 +113,6 @@ useEffect(() => {
             <Button type="submit">
               Step Up
             </Button>
-            {/* <Button type="submit">Submit</Button> */}
           </Stack>
         </form>
         {/* {dirsToPrint.length > 2 && (
@@ -145,9 +144,9 @@ useEffect(() => {
           ))
         )}
         <Typography>Dirs: Map</Typography>
-        {forwardDirs.size > 0 && (
+        {/* {forwardDirs.size > 0 && (
           <Typography color="#f6f6f6">Forward Dirs Exist</Typography>
-        )}
+        )} */}
       </Box>
     </ThemeProvider>
   );
