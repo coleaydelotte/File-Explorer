@@ -11,7 +11,7 @@ function App() {
   const [dirsToPrint, setDirsToPrint] = useState([]);
   const [displayPath, setDisplayPath] = useState("")
 
-  let forwardDirs = new Map();
+  let forwardDirsMap = new Map();
 
   async function formatForOS () {
     try {
@@ -31,6 +31,9 @@ function App() {
     } catch (error) {
       setDirsToPrint(["Error: ", error]);
     }
+    finally {
+      forwardDirsMap = dirsToPrint.map((item, index) => index);
+    }
   }
 
   async function openFile(index) {
@@ -49,7 +52,7 @@ function App() {
     } catch (error) {
       setPath("Error: " + error);
     }
-  }  
+  }
 
   async function retrieveOs() {
     try {
