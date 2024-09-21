@@ -55,6 +55,15 @@ function App() {
     }
   }
 
+  async function stepIn(response) {
+    try {
+      let _, pathResult = await invoke ("step_in", { response: response, pwd: path });
+      setPath(pathResult);
+    } catch (error) {
+      setPath("Error: " + error)
+    }
+  }
+
   async function retrieveOs() {
     try {
       const result = await invoke("get_os");
