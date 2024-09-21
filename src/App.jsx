@@ -81,6 +81,7 @@ useEffect(() => {
         height={"100vh"}
         width={"100vw"}
         bgcolor={"#282c34"}
+        alignItems={"center"}
       >
         <Typography color="#f6f6f6" variant="h6">Current path: {displayPath}</Typography>
         <form
