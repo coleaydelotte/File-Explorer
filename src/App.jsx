@@ -64,6 +64,14 @@ function App() {
     }
   }
 
+  async function openFile(index) {
+    try {
+      await invoke("open_file", { index: index, path: path });
+    } catch (error) {
+      setPath("Error: " + error);
+    }
+  }
+
   async function retrieveOs() {
     try {
       const result = await invoke("get_os");
