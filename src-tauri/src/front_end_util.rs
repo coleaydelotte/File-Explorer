@@ -23,19 +23,14 @@ pub fn greet(name: &str) -> String {
  * pwd is the full filepath to be mutated.
  */
 #[tauri::command]
-pub fn step_in(response: String, pwd: String) -> (Vec<String>, String) {
-    let forward_dirs;
-    let new_path;
-    (forward_dirs, new_path) = main_loop::process_response_step_in(&response, pwd);
-    return (forward_dirs, new_path.to_string());
+pub fn step_in(response: String, pwd: String) -> String {
+    let new_path = main_loop::process_response_step_in(&response, pwd);
+    return new_path.to_string();
 }
 
 #[tauri::command]
 pub fn step_up(path: String) -> String {
-    let forward_dirs;
-    let new_path;
-    (forward_dirs, new_path) = main_loop::process_response_step_up(&path);
-    // return (forward_dirs, new_path.to_string());
+    let new_path = main_loop::process_response_step_up(&path);
     return new_path.to_string();
 }
 

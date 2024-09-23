@@ -136,7 +136,7 @@ pub fn main_loop() {
  * 
  * Returns the forward directories in the new directory.
  */
-pub fn process_response_step_in(response: &String, pwd: String) -> (Vec<String>, String) {
+pub fn process_response_step_in(response: &String, pwd: String) -> (String) {
     let mut directory = directory::Directory::new(PathBuf::from(pwd.trim()));
     let mut functionality = functionality::Functionality::new(directory.get_pwd());
     let forward_dirs = directory.find_forward_directories();
@@ -149,17 +149,17 @@ pub fn process_response_step_in(response: &String, pwd: String) -> (Vec<String>,
             Ok(num) => num,
             Err(_) => {
                 println!("Invalid Command: {}", input);
-                return (directory.find_forward_directories(), directory.get_pwd().display().to_string());
+                return (directory.get_pwd().display().to_string());
             }
         };
         let new_path = functionality.step_in(forward_dirs.clone(), index);
         directory.set_pwd(new_path.clone());
-        return (directory.find_forward_directories(), directory.get_pwd().display().to_string());
+        return (directory.get_pwd().display().to_string());
     }
     else {
         let new_path: PathBuf = functionality.step_in(forward_dirs.clone(), 0);
         directory.set_pwd(new_path.clone());
-        return (directory.find_forward_directories(), directory.get_pwd().display().to_string());
+        return (directory.get_pwd().display().to_string());
     }
 }
 
@@ -168,11 +168,11 @@ pub fn process_response_step_in(response: &String, pwd: String) -> (Vec<String>,
  * 
  * Returns the parent directory's forward directories.
  */
-pub fn process_response_step_up(path: &String) -> (Vec<String>, String) {
+pub fn process_response_step_up(path: &String) -> (String) {
     let mut directory = directory::Directory::new(PathBuf::from(path.trim()));
     let mut functionality = functionality::Functionality::new(directory.get_pwd());
     directory.set_pwd(PathBuf::from(functionality.step_up()));
-    return (directory.find_forward_directories(), directory.get_pwd().display().to_string());
+    return (directory.get_pwd().display().to_string());
 }
 
 /**
