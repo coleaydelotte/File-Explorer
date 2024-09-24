@@ -67,6 +67,16 @@ impl Directory {
         forward_directories
     }
 
+    pub fn find_forward_directories_and_files(&mut self) -> Vec<String> {
+        let mut forward_directories = Vec::new();
+        for entry in WalkDir::new(&self.pwd).min_depth(1).max_depth(1).into_iter().filter_map(|e| e.ok()) {
+            if let Some(file_name) = entry.path().file_name() {
+                forward_directories.push(file_name.to_string_lossy().into_owned());
+            }
+        }
+        forward_directories
+    }
+
     /**
      * This function reads the pwd from the class and then returns
      * the path of the parent directory.

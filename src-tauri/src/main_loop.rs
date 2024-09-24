@@ -172,7 +172,7 @@ pub fn process_response_step_up(path: &String) -> (String) {
     let mut directory = directory::Directory::new(PathBuf::from(path.trim()));
     let mut functionality = functionality::Functionality::new(directory.get_pwd());
     directory.set_pwd(PathBuf::from(functionality.step_up()));
-    return (directory.get_pwd().display().to_string());
+    return directory.get_pwd().display().to_string();
 }
 
 /**

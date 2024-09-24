@@ -57,6 +57,7 @@ function App() {
 
   async function stepIn(response) {
     try {
+      response = "in 1";
       let _, pathResult = await invoke ("step_in", { response: response, pwd: path });
       setPath(pathResult);
     } catch (error) {
@@ -131,9 +132,6 @@ useEffect(() => {
             </Button>
           </Stack>
         </form>
-        {/* {dirsToPrint.length > 2 && (
-          openFile(1)
-        )} */}
         {dirsToPrint.length > 0 && (
           dirsToPrint.map((item, index) => (
             <Box

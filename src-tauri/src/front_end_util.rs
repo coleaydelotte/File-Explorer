@@ -44,7 +44,7 @@ pub fn output_files_as_vector(path: String, print_files: bool) -> Vec<String> {
     let path_buf = PathBuf::from(path.trim());
     let mut directory = directory::Directory::new(path_buf);
     let mut functionality = functionality::Functionality::new(directory.get_pwd());
-    let forward_files = directory.find_forward_files();
+    let forward_files = directory.find_forward_directories_and_files();
 
     return functionality.output_files_as_vector(forward_files, print_files);
 }
