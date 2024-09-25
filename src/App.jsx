@@ -13,6 +13,7 @@ function App() {
 
   let forwardDirsMap = new Map();
 
+  //Windows support not currently working.
   async function formatForOS () {
     try {
       if (os === "windows") {
@@ -81,9 +82,9 @@ function App() {
       setOs("Error: " + error);
     }
   }
-useEffect(() => {
-  retrieveOs();
-}, []);
+// useEffect(() => {
+//   retrieveOs();
+// }, []);
 
 useEffect(() => {
   if (path) {
