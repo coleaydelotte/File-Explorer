@@ -152,9 +152,17 @@ useEffect(() => {
               }}
             >
               {item.includes("Directory") ? (
-                <FolderIcon sx={{ marginRight: "0.5em" }} />
+                <FolderIcon
+                  sx={{
+                    marginRight: "0.5em"
+                  }}
+                />
               ) : (
-                <InsertDriveFileIcon sx={{ marginRight: "0.5em" }} />
+                <InsertDriveFileIcon
+                  sx={{
+                    marginRight: "0.5em"
+                  }}
+                />
               )}
               <Typography
                 color="#f6f6f6"
