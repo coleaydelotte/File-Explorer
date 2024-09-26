@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { Box, Typography, TextField, Button, Stack } from "@mui/material";
-import { InsertDriveFileIcon,  } from '@mui/icons-material/InsertDriveFile';
-import { FolderIcon } from '@mui/icons-material/Folder';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import FolderIcon from '@mui/icons-material/Folder';
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme"
 import "./App.css";
@@ -151,6 +151,11 @@ useEffect(() => {
                 height: "0.25em"
               }}
             >
+              <FolderIcon 
+                sx={{
+                  marginRight: "0.5em"
+                }}
+              />
               <Typography
                 color="#f6f6f6"
                 justifyContent="center"
