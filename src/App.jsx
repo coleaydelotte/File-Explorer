@@ -151,11 +151,11 @@ useEffect(() => {
                 height: "0.25em"
               }}
             >
-              <FolderIcon 
-                sx={{
-                  marginRight: "0.5em"
-                }}
-              />
+              {item.includes("Directory") ? (
+                <FolderIcon sx={{ marginRight: "0.5em" }} />
+              ) : (
+                <InsertDriveFileIcon sx={{ marginRight: "0.5em" }} />
+              )}
               <Typography
                 color="#f6f6f6"
                 justifyContent="center"
