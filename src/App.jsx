@@ -84,9 +84,6 @@ function App() {
       setOs("Error: " + error);
     }
   }
-// useEffect(() => {
-//   retrieveOs();
-// }, []);
 
 useEffect(() => {
   if (path) {
