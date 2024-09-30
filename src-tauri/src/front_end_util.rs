@@ -59,3 +59,8 @@ pub fn format_path_for_windows(path: String) -> String {
     let functionality = functionality::Functionality::new_empty();
     return functionality.format_path_for_windows(path.clone());
 }
+
+#[tauri::command]
+pub fn ls(path: String) -> Vec<String> {
+    return main_loop::process_response_ls(&path);
+}

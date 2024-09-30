@@ -40,6 +40,15 @@ function App() {
     }
   }
 
+  async function ls() {
+    try {
+      const result = await invoke("ls", { path: path });
+      setDirsToPrint(result);
+    } catch (error) {
+      setDirsToPrint(["Error: ", error]);
+    }
+  }
+
   async function openFile(index) {
     try {
       await invoke("open_file", { index: index, path: path });
