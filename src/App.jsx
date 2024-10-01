@@ -26,6 +26,7 @@ function App() {
     }
   }
 
+  // Gets a list of the forward files and folders with a max depth of 1.
   async function getForwardFiles() {
     let boolean = true;
     try {
@@ -40,6 +41,7 @@ function App() {
     }
   }
 
+  // Gets a list of the forward files and folders with a max depth of 1.
   async function ls() {
     try {
       const result = await invoke("ls", { path: path });
@@ -49,6 +51,7 @@ function App() {
     }
   }
 
+  // Opens a file at the provided index in the current folder.
   async function openFile(index) {
     try {
       await invoke("open_file", { index: index, path: path });
@@ -57,6 +60,7 @@ function App() {
     }
   }
 
+  // Steps up one directory.
   async function stepUp() {
     try {
       let newPath = await invoke("step_up", { path: path });
@@ -67,6 +71,7 @@ function App() {
     }
   }
 
+  // Steps into a directory.
   async function stepIn(response) {
     try {
       response = "in 1";
@@ -77,14 +82,7 @@ function App() {
     }
   }
 
-  async function openFile(index) {
-    try {
-      await invoke("open_file", { index: index, path: path });
-    } catch (error) {
-      setPath("Error: " + error);
-    }
-  }
-
+  // Retrieves the operating system of the user running the program.
   async function retrieveOs() {
     try {
       const result = await invoke("get_os");
@@ -94,6 +92,7 @@ function App() {
     }
   }
 
+// When the path changes, get the forward files.
 useEffect(() => {
   if (path) {
     getForwardFiles();
