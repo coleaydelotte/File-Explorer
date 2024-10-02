@@ -83,14 +83,14 @@ function App() {
   }
 
   // Retrieves the operating system of the user running the program.
-  async function retrieveOs() {
-    try {
-      const result = await invoke("get_os");
-      setOs(result);
-    } catch (error) {
-      setOs("Error: " + error);
-    }
-  }
+  // async function retrieveOs() {
+    // try {
+      // const result = await invoke("get_os");
+      // setOs(result);
+    // } catch (error) {
+      // setOs("Error: " + error);
+    // }
+  // }
 
 // When the path changes, get the forward files.
 useEffect(() => {
