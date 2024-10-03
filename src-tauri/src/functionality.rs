@@ -220,8 +220,7 @@ impl Functionality {
     /**
      * Gets file size for a file and returns it.
      */
-    pub fn get_size(&self, file: &str) -> u64 {
-        let file_path = self.pwd.join(file);
+    pub fn get_size(&self, file_path: PathBuf) -> u64 {
         let metadata = file_path.metadata().unwrap();
         metadata.len()
     }
