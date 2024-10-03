@@ -216,4 +216,13 @@ impl Functionality {
                 .expect("Failed to clear terminal");
         }
     }
+
+    /**
+     * Gets file size for a file and returns it.
+     */
+    pub fn get_size(&self, file: &str) -> u64 {
+        let file_path = self.pwd.join(file);
+        let metadata = file_path.metadata().unwrap();
+        metadata.len()
+    }
 }
