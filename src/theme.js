@@ -1,5 +1,8 @@
 import { createTheme } from '@mui/material/styles';
 
+/**
+ * Theme for the input boxes to change to light purple instead of blue.
+ */
 const theme = createTheme({
   components: {
     MuiTextField: {
