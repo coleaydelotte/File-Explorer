@@ -8,7 +8,7 @@ import theme from "./theme"
 import "./App.css";
 
 function App() {
-  const [os, setOs] = useState("");
+  // const [os, setOs] = useState("");
   const [path, setPath] = useState("");
   const [dirsToPrint, setDirsToPrint] = useState([]);
   const [displayPath, setDisplayPath] = useState("")
