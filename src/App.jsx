@@ -8,7 +8,6 @@ import theme from "./theme"
 import "./App.css";
 
 function App() {
-  // const [os, setOs] = useState("");
   const [path, setPath] = useState("");
   const [dirsToPrint, setDirsToPrint] = useState([]);
   const [displayPath, setDisplayPath] = useState("")
@@ -16,15 +15,15 @@ function App() {
   let forwardDirsMap = new Map();
 
   //Windows support not currently working.
-  async function formatForOS () {
-    try {
-      if (os === "windows") {
-        setPath(await invoke("format_path_for_windows", { path: path }));
-      }
-    } catch (error) {
-      setPath("Error: " + error);
-    }
-  }
+  // async function formatForOS () {
+  //   try {
+  //     if (os === "windows") {
+  //       setPath(await invoke("format_path_for_windows", { path: path }));
+  //     }
+  //   } catch (error) {
+  //     setPath("Error: " + error);
+  //   }
+  // }
 
   // Gets a list of the forward files and folders with a max depth of 1.
   async function getForwardFiles() {
@@ -81,16 +80,6 @@ function App() {
       setPath("Error: " + error)
     }
   }
-
-  // Retrieves the operating system of the user running the program.
-  // async function retrieveOs() {
-    // try {
-      // const result = await invoke("get_os");
-      // setOs(result);
-    // } catch (error) {
-      // setOs("Error: " + error);
-    // }
-  // }
 
 // When the path changes, get the forward files.
 useEffect(() => {
