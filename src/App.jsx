@@ -14,17 +14,6 @@ function App() {
 
   let forwardDirsMap = new Map();
 
-  //Windows support not currently working.
-  // async function formatForOS () {
-  //   try {
-  //     if (os === "windows") {
-  //       setPath(await invoke("format_path_for_windows", { path: path }));
-  //     }
-  //   } catch (error) {
-  //     setPath("Error: " + error);
-  //   }
-  // }
-
   // Gets a list of the forward files and folders with a max depth of 1.
   async function getForwardFiles() {
     let boolean = true;
