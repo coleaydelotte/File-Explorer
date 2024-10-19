@@ -48,7 +48,7 @@ function App() {
     }
   }
 
-  // Steps up one directory.
+  // Steps up one directory, setting the path to the new directory.
   async function stepUp() {
     try {
       let newPath = await invoke("step_up", { path: path });
@@ -59,7 +59,7 @@ function App() {
     }
   }
 
-  // Steps into a directory.
+  // Steps into a directory, taking a response from the user.
   async function stepIn(response) {
     try {
       response = "in 1";
