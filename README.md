@@ -32,3 +32,5 @@ Run `npm install` in the project root.
 
 Run `npm run tauri dev` also in the project root.
 <!-- ✅ -->
+
+In the current state their is some dead code in the backend that will be implemented very soon.
