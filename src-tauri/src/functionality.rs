@@ -4,7 +4,6 @@ use walkdir::WalkDir;
 use std::collections::HashMap;
 use std::io::{stdin, stdout, Write};
 
-// Functionality Structure:
 pub struct Functionality {
     pwd : PathBuf,
     potential_steps : HashMap<i32,String>
