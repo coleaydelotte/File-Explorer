@@ -157,6 +157,33 @@ impl Functionality {
     }
 
     /**
+     * This function reads the pwd from the class and then outputs
+     * the files and directories in the current directory to the output file.
+     */
+    pub fn output_files_to_file(&mut self, forward_dirs: Vec<String>, print_files: bool, output_name: String) {
+        let mut dir_iter: i32 = 1;
+        let mut iter: i32 = 1;
+        let pwd_clone = self.pwd.clone();
+
+        let mut output = String::new();
+        for dir_name in forward_dirs {
+            let dir_path = PathBuf::from(pwd_clone.join(dir_name));
+
+            if dir_path.is_dir() {
+                output.push_str(&format!("Directory {}: {}\n", dir_iter, dir_path.iter().last().unwrap().to_string_lossy()));
+                dir_iter += 1;
+
+            }
+            if print_files && dir_path.is_file() {
+                let file_name = dir_path.file_name().unwrap().to_string_lossy();
+                output.push_str(&format!("File {}: {}\n", iter, file_name));
+                iter += 1;
+            }
+        }
+        std::fs::write(output_name, output).expect("Unable to write file");
+    }
+
+    /**
      * This function reads the pwd from the class and then returns what would be printed
      * as a vector of strings to be used in the Tauri application.
      */
