@@ -11,6 +11,7 @@ function App() {
   const [path, setPath] = useState("");
   const [dirsToPrint, setDirsToPrint] = useState([]);
   const [displayPath, setDisplayPath] = useState("")
+  const [selectedDir, setSelectedDir] = useState("");
 
   let forwardDirsMap = new Map();
 
@@ -77,6 +78,12 @@ useEffect(() => {
   }
 }, [path]);
 
+useEffect(() => {
+  if (selectedDir) {
+    console.log("selectedDir: ", selectedDir);
+  }
+}, [selectedDir]);
+
 // When the path changes, get the forward files.
   return (
     <ThemeProvider theme={theme}>
@@ -117,6 +124,15 @@ useEffect(() => {
             <Button type="submit">
               Step Up
             </Button>
+            <Button 
+              // onMouseUp={
+              //   () => {
+              //     stepIn(selectedDir)
+              //   }
+              // }
+            >
+              Step In
+            </Button>
           </Stack>
         </form>
         {dirsToPrint.length > 0 && (
@@ -130,6 +146,11 @@ useEffect(() => {
               borderColor={"#f6f6f6"}
               margin={1}
               justifyContent={"center"}
+              onClick={
+                () => {
+                  item.includes("Directory") ? console.log(index) : openFile(index)
+                }
+              }
               sx={{
                 width: "15em",
                 height: "0.25em"
