@@ -125,11 +125,11 @@ useEffect(() => {
               Step Up
             </Button>
             <Button 
-              // onMouseUp={
-              //   () => {
-              //     stepIn(selectedDir)
-              //   }
-              // }
+              onClick={
+                () => {
+                  stepIn(selectedDir)
+                }
+              }
             >
               Step In
             </Button>
