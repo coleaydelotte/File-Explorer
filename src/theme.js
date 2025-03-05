@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 /**
  * Theme for the input boxes to change to light purple instead of blue.
+ * P.S. MUI is a great library for React, but it's a bit of a pain to style, this is so ugly.
  */
 const theme = createTheme({
   components: {
