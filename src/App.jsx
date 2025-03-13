@@ -63,8 +63,10 @@ function App() {
   // Steps into a directory, taking a response from the user.
   async function stepIn(response) {
     try {
+      // Must re-write this to use the selectedDir variable which contains a path
+      // rather than a string with in and then the index of the folder.
       response = "in 1";
-      let _, pathResult = await invoke ("step_in", { response: response, pwd: path });
+      let _, pathResult = await invoke ("step_in", { response: response, pwd: selectedDir });
       setPath(pathResult);
     } catch (error) {
       setPath("Error: " + error)
@@ -76,6 +78,7 @@ useEffect(() => {
   if (path) {
     getForwardFiles();
   }
+  console.log(path);
 }, [path]);
 
 useEffect(() => {
@@ -148,7 +151,13 @@ useEffect(() => {
               justifyContent={"center"}
               onClick={
                 () => {
-                  item.includes("Directory") ? console.log(index) : openFile(index)
+                  // item.includes("Directory") ? console.log(index) : openFile(index)
+                  if (item.includes("Directory")) {
+                    setSelectedDir(item);
+                    console.log("Selected directory: ", item);
+                  } else {
+                    openFile(index);
+                  }
                 }
               }
               sx={{
