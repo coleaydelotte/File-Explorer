@@ -16,7 +16,7 @@ Uses a fully written in rust back-end, and a modern front-end framework (Vite), 
 ### Technologies Used
 ![Technologies](./demos/Technologies.png)
 
-Uses Tauri as the main framework to facilitate the connection between vite and rust. Vite is the front-end
+Uses Tauri as the main framework to facilitate the connection between vite and rust. Vite for the front-end
 framework working with React, Material-ui, and Java Script to create a front end using modern web frameworks.
 
 Version: 1.0.1 :)
