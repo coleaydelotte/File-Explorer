@@ -138,55 +138,70 @@ useEffect(() => {
             </Button>
           </Stack>
         </form>
-        {dirsToPrint.length > 0 && (
-          dirsToPrint.map((item, index) => (
-            <Box
-              className="mapBox"
-              key={index}
-              alignItems="center"
-              border={1}
-              borderRadius={3}
-              borderColor={"#f6f6f6"}
-              margin={1}
-              justifyContent={"center"}
-              onClick={
-                () => {
-                  // item.includes("Directory") ? console.log(index) : openFile(index)
-                  if (item.includes("Directory")) {
-                    setSelectedDir(item);
-                    console.log("Selected directory: ", item);
-                  } else {
-                    openFile(index);
+        <Stack
+          margin={2}
+          spacing={2}
+          direction="column"
+          sx={{
+            width: "15em",
+            height: "100%",
+            overflowY: "scroll",
+            overflowX: "hidden",
+            backgroundColor: "#282c34",
+            borderRadius: "5px",
+            padding: "10px",
+          }}
+        >
+          {dirsToPrint.length > 0 && (
+            dirsToPrint.map((item, index) => (
+              <Box
+                className="mapBox"
+                key={index}
+                alignItems="center"
+                border={1}
+                borderRadius={3}
+                borderColor={"#f6f6f6"}
+                margin={1}
+                justifyContent={"center"}
+                onClick={
+                  () => {
+                    // item.includes("Directory") ? console.log(index) : openFile(index)
+                    if (item.includes("Directory")) {
+                      setSelectedDir(item);
+                      console.log("Selected directory: ", item);
+                    } else {
+                      openFile(index);
+                    }
                   }
                 }
-              }
-              sx={{
-                width: "15em",
-                height: "0.25em"
-              }}
-            >
-              {item.includes("Directory") ? (
-                <FolderIcon
-                  sx={{
-                    marginRight: "0.5em"
-                  }}
-                />
-              ) : (
-                <InsertDriveFileIcon
-                  sx={{
-                    marginRight: "0.5em"
-                  }}
-                />
-              )}
-              <Typography
-                color="#f6f6f6"
-                justifyContent="center"
+                sx={{
+                  width: "15em",
+                  height: "0.25em"
+                }}
               >
-                {item}
-              </Typography>
-            </Box>
-          ))
-        )}
+                {item.includes("Directory") ? (
+                  <FolderIcon
+                    sx={{
+                      marginRight: "0.5em"
+                    }}
+                  />
+                ) : (
+                  <InsertDriveFileIcon
+                    sx={{
+                      marginRight: "0.5em"
+                    }}
+                  />
+                )}
+                <Typography
+                  color="#f6f6f6"
+                  justifyContent="center"
+                >
+                  {item}
+                </Typography>
+              </Box>
+            ))
+          )}
+        </Stack>
       </Box>
     </ThemeProvider>
   );
