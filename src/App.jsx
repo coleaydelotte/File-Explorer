@@ -98,7 +98,30 @@ useEffect(() => {
         bgcolor={"#282c34"}
         alignItems={"center"}
       >
-        <Typography color="#f6f6f6" variant="h6">Current path: {displayPath}</Typography>
+        <Box
+          /**
+           * Positioning in the top left at all times.
+           */
+          position={"absolute"}
+          top={0}
+          left={0}
+          zIndex={1}
+          padding={2}
+          width={"100%"}
+        >
+          <Typography color="#f6f6f6" variant="h4" fontSize={"1em"}>
+            {
+              // for every / in the path we put a > in the string because this is breadcrumbs
+              displayPath.split("\\").map((item, index) => {
+                if (index === 0) {
+                  return item;
+                } else {
+                  return " > " + item;
+                }
+              })
+            }
+          </Typography>
+        </Box>
         <form
           onSubmit={ (e) => {
             e.preventDefault()
