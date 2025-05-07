@@ -165,7 +165,6 @@ useEffect(() => {
                 justifyContent={"center"}
                 onClick={
                   () => {
-                    // item.includes("Directory") ? console.log(index) : openFile(index)
                     if (item.includes("Directory")) {
                       setSelectedDir(item);
                       console.log("Selected directory: ", item);
