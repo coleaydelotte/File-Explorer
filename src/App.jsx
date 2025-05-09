@@ -209,9 +209,7 @@ useEffect(() => {
                       setSelectedDir(item);
                       console.log("Selected directory: ", item);
                     } else {
-                      if (selectedDir.contains(index)) {
                       openFile(index);
-                      }
                     }
                   }
                 }
