@@ -180,8 +180,10 @@ useEffect(() => {
           margin={2}
           spacing={2}
           direction="column"
+          justifyContent={"center"}
+          alignItems={"center"}
           sx={{
-            width: "15em",
+            width: "45em",
             height: "100%",
             overflowY: "scroll",
             overflowX: "hidden",
@@ -212,7 +214,7 @@ useEffect(() => {
                   }
                 }
                 sx={{
-                  width: "15em",
+                  width: "30em",
                   height: "0.25em"
                 }}
               >
