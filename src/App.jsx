@@ -207,6 +207,7 @@ useEffect(() => {
                   () => {
                     if (item.includes("Directory")) {
                       setSelectedDir(item);
+                      stepIn(item)
                       console.log("Selected directory: ", item);
                     } else {
                       openFile(index);
