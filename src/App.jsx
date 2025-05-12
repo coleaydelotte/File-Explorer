@@ -113,7 +113,7 @@ useEffect(() => {
             justifyContent={"center"}
             top={0}
           >
-            <Typography color="#f6f6f6" variant="h5">File Explorer</Typography>
+            <Typography color="#f6f6f6" variant="h6">File Explorer</Typography>
           </Box>
           <Box
             position={"absolute"}
