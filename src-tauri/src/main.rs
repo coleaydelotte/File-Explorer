@@ -7,7 +7,10 @@ mod directory;
 mod os_calls;
 mod front_end_util;
 
-// Building GUI and loading Utility.
+/**
+ * This is the entry point for the application purely for the GUI interface.
+ * The command line interface is in main_cmd.rs
+ */
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
