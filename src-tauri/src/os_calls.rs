@@ -25,6 +25,10 @@ pub fn open_file(file_path: &str) {
     }
 }
 
+/**
+ * This function will return the current operating system.
+ * It will use the `cfg` attribute to check the target OS.
+ */
 pub fn get_os() -> String {
     let os;
     #[cfg(target_os = "windows")] {
