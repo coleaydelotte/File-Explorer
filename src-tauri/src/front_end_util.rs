@@ -67,6 +67,8 @@ pub fn output_files_as_vector(path: String, print_files: bool) -> Vec<String> {
 
 /**
  * This function returns the current user's operating system.
+ * It takes no arguments and returns a string
+ * representing the operating system.
  */
 #[tauri::command]
 pub fn get_os() -> String {
