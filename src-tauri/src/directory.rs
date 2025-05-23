@@ -108,6 +108,9 @@ impl Directory {
         self.update_values();
     }
 
+    /**
+     * Getter for the forward directories.
+     */
     pub fn get_pwd(&self) -> PathBuf {
         self.pwd.clone()
     }
