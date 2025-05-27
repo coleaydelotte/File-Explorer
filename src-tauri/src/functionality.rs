@@ -28,6 +28,9 @@ impl Functionality {
         func
     }
 
+    /**
+     * This function creates a new Functionality struct with an empty path.
+     */
     pub fn new_empty() -> Functionality {
         let func: Functionality = Functionality {
             pwd : PathBuf::new(),
