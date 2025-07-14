@@ -28,7 +28,5 @@ Version: 1.0.1 :)
 ### Run Program
 You will need Node.js installed if it is not installed you can install it [here](https://nodejs.org/en/download/package-manager).
 
-Run `npm install` in the project root.
-
-Run `npm run tauri dev` also in the project root.
+Run `npm install && npm run tauri dev` in the project root.
 <!-- ✅ -->
